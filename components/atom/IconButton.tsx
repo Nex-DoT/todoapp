@@ -1,3 +1,4 @@
+'use client'
 import React, { ReactNode } from 'react';
 import { Button } from '@nextui-org/button';
 interface IconProps {
@@ -14,8 +15,8 @@ const IconButton: React.FC<IconProps> = ({ icon ,name , onclick }) => {
             onClick={onclick}
             isIconOnly
             name={name}
-            variant='clear'
-            > {icon}</Button>
+            variant='light'
+            >{icon}</Button>
 
     </div>
   );

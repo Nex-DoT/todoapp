@@ -1,7 +1,6 @@
 'use client'
 import React from 'react';
 import { Calendar } from '../ui/calendar';
-import { format } from "date-fns"
 import { LuAlarmClock } from "react-icons/lu";
 import { Button } from '@nextui-org/button';
 import {
@@ -16,7 +15,7 @@ const Clock = () => {
         <Popover >
         <PopoverTrigger asChild>
           <Button
-            variant={'clear'}
+            variant={'light'}
             className={`flex bg-background2 w-44 `
             }
           >

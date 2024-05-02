@@ -34,7 +34,7 @@ const Menu = () => {
                 </div>
                 <SearchBar />
                 <MenuTask />
-                <hr className=' border-opacity-60 border-primary-2' />
+                <hr className=' border-opacity-30 border-primary-2' />
                 <ListTasks />
             </div>
             <div className='w-full'>

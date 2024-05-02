@@ -5,7 +5,7 @@ import { MenuItemType } from '@/types';
 const IconTextButton = ({text , icon , name , onClick}:MenuItemType) => {
     return (
         <Button 
-                variant='clear'
+                variant='light'
                 className='w-full flex items-center justify-start '
                 name={name}
                 onClick={onClick}

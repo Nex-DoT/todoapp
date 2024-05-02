@@ -7,7 +7,7 @@ import TaskCounter from './TaskCounter';
 const MenuItems = ({text , icon}:MenuItemType) => {
     return (
         <Button 
-            variant={'clear'}
+            variant={'light'}
             className='w-full flex items-center justify-between'
             endContent={
                 <TaskCounter/>

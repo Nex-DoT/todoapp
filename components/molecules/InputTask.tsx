@@ -37,12 +37,12 @@ const InputTask = () => {
         console.log(open);
     };
     return (
-        <div className='flex items-center h-16 bg-background2 rounded-md w-full mb-4 '>
+        <div className='flex items-center justify-between h-16 bg-background2 rounded-md w-full mb-4 '>
             <div className='flex items-center w-5/6' >
                 <IconButton icon={<FaPlus/>} onclick={plusHandeler}/>
                 <input className=' bg-background2 outline-none w-2/4' type="text" placeholder='Type a ToDo' />
             </div>
-            <div className='w-1/5 flex items-center relative'>
+            <div className='w-1/5 flex items-center justify-around relative'>
                 <div className=' relative'>
                     <IconTextButton text={`${value}`} name='Calendar' icon={<FaCalendarDays/>}  onClick={toggelHandeler}/>
                     { open.Calendar && <div className=' absolute bottom-20 right-0 bg-input p-1 rounded-2xl before:w-8 before:h-8 before:absolute before:-bottom-2 before:rotate-45 before:bg-input before:right-10 shadow-xl animate-appearance-in'>
@@ -51,7 +51,7 @@ const InputTask = () => {
                 </div>
                 <div className=' relative '>
                     <IconButton icon={<LuAlarmClock/>} name='clock' onclick={toggelHandeler}/>
-                    { open.clock && <div className=' absolute bottom-20 right-0 bg-input p-1 rounded-2xl before:w-8 before:h-8 before:absolute before:-bottom-2 before:rotate-45 before:bg-input before:right-10 shadow-xl animate-appearance-in'>
+                    { open.clock && <div className=' absolute bottom-20 -left-6 bg-input p-1 rounded-2xl before:w-8 before:h-8 before:absolute before:-bottom-2 before:rotate-45 before:bg-input before:right-10 shadow-xl animate-appearance-in'>
                       <TimeInput className=' shadow-none overflow-hidden' />
                     </div>}
                 </div>
