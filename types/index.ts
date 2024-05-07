@@ -3,7 +3,15 @@ export type TitleType = {
   text: string , 
   size: number
 }
-
+export type authSignUpType={
+  username:string ,
+  email:string,
+  password:string
+}
+export type authLoginType={
+  eamil:string,
+  password:string
+}
 export type MenuItemType = {
   name: string,
   text: any,
