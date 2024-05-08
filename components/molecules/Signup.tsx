@@ -22,10 +22,39 @@ const Signup = () => {
         email:'',
         password:'',
     });
-    const submitHandeler = (e : any)=>{
+    const submitHandeler = async (e: any) => {
         e.preventDefault();
-        setError(regexTest('signup' , data))
-        console.log(error)
+        setError(regexTest('signup', data));
+        // console.log(error);
+        
+        if (error.email === "" && error.password === "" && error.username === "") {
+            try {
+                const res = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: { "Content-Type": "application/json" }
+                });
+    
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res}`);
+                }
+    
+                const text = await res.text();
+    
+                let newdata;
+    
+                try {
+                    newdata = JSON.parse(text);
+                } catch (e) {
+                    console.error('Error parsing JSON response:', e);
+                    return;
+                }
+    
+                console.log(newdata);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
     }
     return (
         <form className=' flex gap-3 flex-col w-full h-full items-center justify-between'>

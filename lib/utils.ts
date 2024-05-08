@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
-export async function ConnectToDB(){
-  try{
-    if(!mongoose.connections[0]){
-      await mongoose.connect(process.env.MONGODB_URL as string);
-      console.log('Connected to DB');
-      
+export async function ConnectToDB() {
+  try {
+    if (mongoose.connection.readyState === 1) {
+      console.log('Already connected to DB');
+      return;
     }
-  }catch(e){
-    console.log('Error connecting to DB');
+
+    await mongoose.connect(process.env.MONGODB_URL as string);
+    console.log('Connected to DB');
+  } catch (e) {
+    console.error('Error connecting to DB:');
   }
 }
+
 import { authSignUpType } from "@/types";
 export function regexTest(type: string, data: authSignUpType) {
   console.log(data);
@@ -44,4 +47,13 @@ export function regexTest(type: string, data: authSignUpType) {
   }
 
   return error;
+}
+var bcrypt = require('bcryptjs');
+export async function hashPassword(password: string){
+  const hashedPassword = bcrypt.hashSync(password , 13);
+  return hashedPassword
+}
+export async function unHashPassword(password:string , hashedPassword:string) {
+  const verify = bcrypt.compare(password , hashedPassword);
+  return verify
 }
