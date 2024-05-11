@@ -23,9 +23,8 @@ const Signup = () => {
         password:'',
     });
     const submitHandeler = async (e: any) => {
-        e.preventDefault();
         setError(regexTest('signup', data));
-        // console.log(error);
+        e.preventDefault();
         
         if (error.email === "" && error.password === "" && error.username === "") {
             try {

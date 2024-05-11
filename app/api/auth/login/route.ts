@@ -1,8 +1,9 @@
 import { ConnectToDB, unHashPassword } from "@/lib/utils";
 import User from "@/models/User";
 import { NextResponse } from "next/server";
+import { NextApiResponse } from "next";
 var jwt = require('jsonwebtoken');
-export async function POST( req:Request){
+export async function POST( req:Request , res:NextApiResponse){
     const expiration = 60 * 60 * 24 * 7;
     const secretKey = process.env.SECRET_KEY
     try{
@@ -26,4 +27,8 @@ export async function POST( req:Request){
     }
     const email = body.email;
     const token = jwt.sign({email} , secretKey , {expisedIn:expiration} );
+
+    res.setHeader('Set-Cookie', `token=${token}; Path=/; HttpOnly; Max-Age=${expiration}`);
+
+    return NextResponse.json({status:'success' , message:'login successful'});
 }
