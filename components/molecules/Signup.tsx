@@ -10,7 +10,7 @@ import { VscEyeClosed } from "react-icons/vsc";
 import Title from '../atom/Title';
 import { regexTest } from '@/lib/utils';
 import { authSignUpType } from '@/types';
-const Signup = () => {
+const Signup = ({onclick}:{onclick:()=>void}) => {
     const [eye , setEye] = useState(false);
     const [error , setError] = useState<authSignUpType>({
         username:'',
@@ -94,7 +94,7 @@ const Signup = () => {
                             <div className=' cursor-pointer' onClick={()=>setEye(!eye)}>{eye ?<VscEye/> : <VscEyeClosed/>}</div>
                         }
                     />
-                    <p className='text-xs'>if you already have an account <span className=' text-primary-500 cursor-pointer underline'>click on me.</span></p>
+                    <p className='text-xs'>if you already have an account <span className=' text-primary-500 cursor-pointer underline' onClick={onclick}>click on me.</span></p>
                     <button className='w-full h-10 bg-primary-400 rounded-md transition-colors hover:bg-primary-500' onClick={submitHandeler} type='submit'>Sign-UP</button>
         </form>
     );

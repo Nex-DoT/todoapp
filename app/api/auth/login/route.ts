@@ -2,6 +2,8 @@ import { ConnectToDB, unHashPassword } from "@/lib/utils";
 import User from "@/models/User";
 import { NextResponse } from "next/server";
 import { NextApiResponse } from "next";
+import { cookies } from "next/headers";
+var cookie = require("cookie");
 var jwt = require('jsonwebtoken');
 export async function POST( req:Request , res:NextApiResponse){
     const expiration = 60 * 60 * 24 * 7;
@@ -22,13 +24,16 @@ export async function POST( req:Request , res:NextApiResponse){
         return NextResponse.json({status:'failed' , message:'you are not signed up yet.'});
     }
     const validationPASS = await unHashPassword(body.password , user.password);
+    console.log(validationPASS);
+    
     if(!validationPASS){
         return NextResponse.json({status:'failed' , message:'username or password is invalid'})
     }
     const email = body.email;
-    const token = jwt.sign({email} , secretKey , {expisedIn:expiration} );
-
-    res.setHeader('Set-Cookie', `token=${token}; Path=/; HttpOnly; Max-Age=${expiration}`);
-
-    return NextResponse.json({status:'success' , message:'login successful'});
+    const token = jwt.sign({email} , secretKey , {expiresIn:expiration} );
+    console.log(email);
+    console.log(token);
+    return NextResponse.json(
+                            {status:'success' , message:'login successful' } ,
+                            { headers:{'Set-Cookie' : cookie.serialize('token' , token , {httpOnly:true , maxAge:expiration , path:'/'})}});
 }
