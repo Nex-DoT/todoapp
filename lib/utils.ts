@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 export async function ConnectToDB() {
   try {
     if (mongoose.connection.readyState === 1) {
@@ -59,4 +60,14 @@ export async function hashPassword(password: string){
 export async function unHashPassword(password:string , hashedPassword:string) {
   const verify = bcrypt.compare(password , hashedPassword);
   return verify
+}
+var jwt = require('jsonwebtoken');
+export async function tokenVerify(token:string , secretKey:string) {
+  try{
+    const result = await jwt.verify(token, secretKey);
+    console.log(result);
+    return {email: result.email}
+  }catch{
+    return false
+  }
 }
