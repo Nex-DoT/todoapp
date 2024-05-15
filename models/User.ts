@@ -18,7 +18,7 @@ const userSchema = new Schema({
         default: Date.now,
         immutable: true,
     },
-})
+});
 
 const User = models.User || model('User' , userSchema);
 
