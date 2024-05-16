@@ -11,13 +11,12 @@ const CheckButton = () => {
         setIcon(!icon);
     }
     return (
-            <Button
+            <div
                 className='w-full flex items-center justify-between h-14'
-                variant='light'
             >
                 <Checkbox defaultSelected lineThrough>Option</Checkbox>
                 <IconButton icon={ icon ? <FaRegStar/> : <FaStar/>} onclick={clickhandeler}/>
-            </Button>
+            </div>
     );
 };
 

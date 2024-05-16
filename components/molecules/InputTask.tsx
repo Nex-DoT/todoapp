@@ -4,20 +4,19 @@ import { FaPlus } from 'react-icons/fa';
 import IconButton from '../atom/IconButton';
 import IconTextButton from '../atom/IconTextButton';
 import { LuAlarmClock } from "react-icons/lu";
+import { Button } from '@nextui-org/button';
 import { FaTasks } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { FaCalendarDays } from "react-icons/fa6";
 import {Calendar} from "@nextui-org/calendar";
 import {parseDate} from "@internationalized/date";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem,} from "@nextui-org/dropdown";
 import {TimeInput} from "@nextui-org/date-input";
 const InputTask = () => {
   let today = new Date();
   let dateString = today.toISOString().split('T')[0];
-  console.log(dateString);
-  
   let [value, setValue] = React.useState(parseDate(dateString));
-  console.log(value);
   let [data , setData ] = React.useState({
     isImportant: false,
     date: `${value}`,
@@ -28,6 +27,12 @@ const InputTask = () => {
         clock: false,
         Calendar: false,
     })
+    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["text"]));
+
+  const selectedValue = React.useMemo(
+    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+    [selectedKeys]
+  );
     const plusHandeler= ()=>{
 
     }
@@ -42,7 +47,31 @@ const InputTask = () => {
                 <IconButton icon={<FaPlus/>} onclick={plusHandeler}/>
                 <input className=' bg-background2 outline-none w-2/4' type="text" placeholder='Type a ToDo' />
             </div>
-            <div className='w-1/5 flex items-center justify-around relative'>
+            <div className='w-2/5 flex items-center justify-around relative'>
+            <Dropdown>
+                <DropdownTrigger>
+                    <Button 
+                    variant="light" 
+                    className="capitalize"
+                    >
+                    {selectedValue}
+                    </Button>
+                </DropdownTrigger>
+                <DropdownMenu 
+                    aria-label="Single selection example"
+                    variant="light"
+                    disallowEmptySelection
+                    selectionMode="single"
+                    selectedKeys={selectedKeys}
+                    onSelectionChange={setSelectedKeys as any}
+                >
+                    <DropdownItem key="text">Text</DropdownItem>
+                    <DropdownItem key="number">Number</DropdownItem>
+                    <DropdownItem key="date">Date</DropdownItem>
+                    <DropdownItem key="single_date">Single Date</DropdownItem>
+                    <DropdownItem key="iteration">Iteration</DropdownItem>
+                </DropdownMenu>
+                </Dropdown>
                 <div className=' relative'>
                     <IconTextButton text={`${value}`} name='Calendar' icon={<FaCalendarDays/>}  onClick={toggelHandeler}/>
                     { open.Calendar && <div className=' absolute bottom-20 right-0 bg-input p-1 rounded-2xl before:w-8 before:h-8 before:absolute before:-bottom-2 before:rotate-45 before:bg-input before:right-10 shadow-xl animate-appearance-in'>
