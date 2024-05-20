@@ -8,17 +8,21 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const secretKey = process.env.SECRET_KEY;
     console.log(cookie);
     if(!cookie){
-        return NextResponse.json({status:400 , message:'youre not logged in yet.'})
+        return NextResponse.json({status:'failed' , message:'youre not logged in yet.'})
     }else{
         const token = cookie.split("=")[1];
-        try{
-            await ConnectToDB();
-        }catch{
-            console.log('Could not connect to DB');  
-        }
         const result = await tokenVerify(token , secretKey as string) as any;
-        const user = await User.findOne({email: result.email})
-        const userInfo = { username: user.username , email:user.email}
-        return NextResponse.json({status: 200, message:'your token is valid' , userInfo})        
+        if(result){
+            try{
+                await ConnectToDB();
+            }catch{
+                console.log('Could not connect to DB');  
+            }
+            const user = await User.findOne({email: result.email})
+            const userInfo = { username: user.username , email:user.email}
+            return NextResponse.json({status: 'success', message:'your token is valid' , userInfo})        
+        }else{
+            return NextResponse.json({status:'failed' , message:'your token is not valid'})
+        }
     } 
 }

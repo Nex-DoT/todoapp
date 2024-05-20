@@ -5,7 +5,6 @@ import { fontSans } from "@/config/fonts";
 import { Providers } from "./providers";
 import clsx from "clsx";
 import Menu from "@/components/organisms/Menu";
-
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
