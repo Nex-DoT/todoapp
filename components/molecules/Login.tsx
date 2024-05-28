@@ -5,6 +5,7 @@ import {Input} from "@nextui-org/input";
 import { IoIosMail } from "react-icons/io";
 import { PiPasswordFill } from "react-icons/pi";
 import { VscEye } from "react-icons/vsc";
+import { useRouter } from 'next/router';
 import { VscEyeClosed } from "react-icons/vsc";
 import Title from '../atom/Title';
 import { regexTest } from '@/lib/utils';
@@ -40,6 +41,7 @@ const Login = ({onclick}:{onclick:()=>void}) => {
     
                 try {
                     newdata = JSON.parse(text);
+                    if(newdata.status === 'success') window.location.href = '/'
                 } catch (e) {
                     console.error('Error parsing JSON response:', e);
                     return;

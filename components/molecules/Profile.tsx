@@ -2,7 +2,10 @@
 import React from 'react';
 import Image from 'next/image';
 import Title from '../atom/Title';
+import { context } from '@/context/context';
 const Profile = () => {
+    const {state , dispatch} = context();
+    
     return (
         <div className='flex items-center w-full '>
             <Image className='rounded-full' src={"https://avatars.githubusercontent.com/u/123931213?v=4"} alt='png' width={45} height={45}/>

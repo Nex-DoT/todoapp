@@ -21,8 +21,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
             const user = await User.findOne({email: result.email})
             const userInfo = { username: user.username , email:user.email}
             return NextResponse.json({status: 'success', message:'your token is valid' , userInfo})        
-        }else{
-            return NextResponse.json({status:'failed' , message:'your token is not valid'})
         }
+            return NextResponse.json({status:'failed' , message:'your token is not valid'})
     } 
 }

@@ -1,14 +1,29 @@
-import React, { useReducer , Dispatch } from "react";
+import React, { useReducer , Dispatch, useContext } from "react";
 import { ReactNode } from "react";
 import { createContext } from "react";
 // 1. تغییر نام متغیر به initialState
-const initialState = {};
+const initialState = {
+  email:'',
+  tasks:[],
+  list:[],
+};
 
 // 2. اضافه کردن state و action به reducer
 const reducer = (state:any, action:any) => {
   // عملیات reducer
   switch(action.type) {
-    // case ها و عملیات های مورد نیاز
+    case 'ADDLIST':
+        if(!state.list.find((item:any)=> item.name === action.payload.name)){
+            state.list.push(action.payload);
+        }
+        return {list:[...state.list]};
+    case 'ADDTASK':
+        if(!state.tasks.find((item:any)=> item.name === action.payload)) {
+          state.task.push(action.payload)
+        }
+        return {task:[...state.task]};
+    case 'ADDEMAIL':
+       return{email: action.payload}
     default:
       return state;
   }
@@ -25,5 +40,12 @@ const ContextProviderApp = ({ children }: { children: ReactNode }) => {
         </TodoApp.Provider>
     );
 };
+export const context = ()=>{
+    const result = useContext(TodoApp);
+    const {state , dispatch} = result as any;
+    console.log(result);
+    return { state, dispatch}
+    
+}
 
 export default ContextProviderApp;
