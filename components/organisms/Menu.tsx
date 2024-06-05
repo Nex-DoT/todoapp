@@ -11,7 +11,6 @@ import ListTask from '../atom/ListTask';
 import ListTasks from '../molecules/ListTasks';
 import IconTextButton from '../atom/IconTextButton';
 import { FaSignOutAlt } from 'react-icons/fa';
-
 const Menu = () => {
     const [menu, setMenu] = useState(true);
 

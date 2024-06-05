@@ -3,14 +3,20 @@ import React from 'react';
 import { useState } from 'react';
 import Title from '../atom/Title';
 import { Button } from '@nextui-org/button';
+import {ScrollShadow} from "@nextui-org/scroll-shadow";
 import Icon from '../atom/Icon';
+import {Slide, toast , ToastContainer} from 'react-toastify'
 import { FaPlus } from "react-icons/fa";
 import ListTask from '../atom/ListTask';
 import IconTextButton from '../atom/IconTextButton';
 import { Input } from '@nextui-org/input';
 import {  Modal,   ModalContent, useDisclosure ,   ModalHeader,   ModalBody,   ModalFooter} from "@nextui-org/modal";
-
-const ListTasks = () => {
+import { context } from '@/context/context';
+const ListTasks =  () => {
+    const {state , dispatch} =  context();
+    console.log(state);
+    
+    
     const [listData , setListData] = useState({
         name: 'NEW List',
         color:'FF5733',
@@ -43,6 +49,9 @@ const ListTasks = () => {
 
             try {
                 newdata = JSON.parse(text);
+                if(newdata.status === 'success'){
+                    dispatch( { type: 'ADDLIST' , payload: newdata.newList})
+                }
             } catch (e) {
                 console.error('Error parsing JSON response:', e);
                 return;
@@ -56,7 +65,17 @@ const ListTasks = () => {
     return (
         <div>
             <Title text='LIST' size={4}/>
-            <ListTask name='Profile' color='#e6f263'/>
+            <ScrollShadow
+            hideScrollBar 
+            // offset={100}
+            // orientation="horizontal" 
+            className="w-full  max-h-[200px]">
+                <div>
+                    {
+                        state.list.map((item:any) => <ListTask name={item.name}  color={`#${item.color}`}/>)
+                    }
+                </div>
+            </ScrollShadow>
             <IconTextButton text='Add New List' icon={<FaPlus/>} name='add' onClick={onOpen}/>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>

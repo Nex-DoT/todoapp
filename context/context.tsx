@@ -12,16 +12,20 @@ const initialState = {
 const reducer = (state:any, action:any) => {
   // عملیات reducer
   switch(action.type) {
+    case 'SETLIST': 
+          return {...state , list: action.payload}
+    case 'SETTASK':
+          return {...state , tasks : action.payload}
     case 'ADDLIST':
         if(!state.list.find((item:any)=> item.name === action.payload.name)){
             state.list.push(action.payload);
         }
-        return {list:[...state.list]};
+        return {...state , list:[...state.list]};
     case 'ADDTASK':
         if(!state.tasks.find((item:any)=> item.name === action.payload)) {
           state.task.push(action.payload)
         }
-        return {task:[...state.task]};
+        return {...state , tasks:[...state.task]};
     case 'ADDEMAIL':
        return{email: action.payload}
     default:

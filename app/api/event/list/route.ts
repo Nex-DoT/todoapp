@@ -27,5 +27,5 @@ export async function POST(req: NextRequest, res: NextResponse){
     const newList = await List.create({email , name , color});
     console.log(newList);
     
-    return NextResponse.json({status:'success' , message:'list created successfully'})
+    return NextResponse.json({status:'success' , newList})
 }

@@ -5,7 +5,7 @@ import { ListTaskType } from '@/types';
 const ListTask = ({name , color}:ListTaskType) => {
     return (
         <Button
-            variant='clear'
+            variant='light'
             className='w-full flex items-center justify-between'
             startContent={
                 <div className='flex items-center gap-2'>

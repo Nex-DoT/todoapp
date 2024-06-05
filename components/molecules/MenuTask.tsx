@@ -8,7 +8,7 @@ const MenuTask = () => {
         <div className='mb-4'>
             <Title text='TASKS' size={4}/>
             {
-                data.map(item => <MenuItems text={item.name} icon={item.icon}/>)
+                data.map(item => <MenuItems key={item.name} text={item.name} icon={item.icon}/>)
             }
         </div>
     );

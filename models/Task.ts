@@ -3,7 +3,7 @@ import { Schema , model , models } from "mongoose";
 
 const TaskSchema = new Schema({
     email:{
-        type: 'stirng',
+        type: 'string',
         required: true,
     },
     taskName:{

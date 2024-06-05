@@ -2,15 +2,15 @@ import { Schema , model , models } from "mongoose";
 
 const ListSchema = new Schema({
     email:{
-        type: "string",
+        type: String,
         required: true,
     },
     name:{
-        type: "string",
+        type: String,
         required: true,
     },
     color:{
-        type: "string",
+        type: String,
         required:true,
     }
 });
