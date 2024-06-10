@@ -1,31 +1,38 @@
-import { Schema , model , models } from "mongoose";
-
+import { Schema, model, models } from "mongoose";
 
 const TaskSchema = new Schema({
-    email:{
-        type: 'string',
-        required: true,
-    },
-    taskName:{
-        type: 'string',
-        required:true,
-    },
-    listName:{  
-        type: 'string',
-        required:true,
-    },
-    clock:{
-        type: 'string',
-    },
-    calendar:{
-        type: 'string',
-    },
-    createdAt:{
-        type: Date,
-        default: ()=> Date.now(),
-    }
-});
+  email: {
+    type: String,  
+    required: true,
+  },
+  isDone:{
+    type: Boolean, 
+    required: true,
+  },
+  isImportant: {
+    type: Boolean,
+    required: true,
+  },
+  task: {
+    type: String,  
+    required: true,
+  },
+  list: {
+    type: String,  
+    required: true,
+  },
+  time: {
+    type: String,  
+  },
+  date: {
+    type: String,  
+  },
+  description: {
+    type: String,  
+    required: false,
+  }
+}, { timestamps: true }); 
 
-const Task = models.Task || model("Task" , TaskSchema);
+const Task = models.Task || model("Task", TaskSchema);
 
 export default Task;

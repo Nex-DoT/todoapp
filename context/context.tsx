@@ -27,7 +27,7 @@ const reducer = (state:any, action:any) => {
         }
         return {...state , tasks:[...state.task]};
     case 'ADDEMAIL':
-       return{email: action.payload}
+       return{...state , email: action.payload}
     default:
       return state;
   }

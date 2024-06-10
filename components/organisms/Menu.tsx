@@ -11,24 +11,36 @@ import ListTask from '../atom/ListTask';
 import ListTasks from '../molecules/ListTasks';
 import IconTextButton from '../atom/IconTextButton';
 import { FaSignOutAlt } from 'react-icons/fa';
+import MiniBtnTheme from '../ui/mini-btn-theme';
+import { context } from '@/context/context';
 const Menu = () => {
+    const {dispatch} = context();
     const [menu, setMenu] = useState(true);
 
     const menuHandler = () => {
         setMenu(!menu);
     };
-
-    const menuWidth = menu ? 'w-96' : 'w-10';
+    const signOutHandeler= async() => {
+        const res = await fetch('api/auth/signout')
+        const data = await res.json();
+        if(data.status === 'success'){
+            dispatch({type:'ADDEMAIL', payload:'' });
+        }
+    };
+    const menuWidth = menu ? 'w-96' : 'w-14';
 
     const data = DataNameMenu;
     return (
         <menu
-            className={` overflow-hidden h-full ${menuWidth} relative flex flex-col items-start justify-between pt-7 transition-all bg-background2 p-6`}
+            className={` overflow-hidden h-full ${menuWidth} relative  pt-7 transition-all bg-background2 p-4`}
         >
+            
+        {menu
+        ?<div className='w-full h-full flex flex-col items-center justify-between'>
+            {/* opened Menu */}
             <div className='w-full'>
                 <Profile />
-                <div className={` opacity-0 transition-opacity ${!menu && 'absolute top-0 w-full h-full z-30 bg-background2 opacity-100'}`}></div>
-                <div className={`absolute top-8 right-3 ${!menu && ' !right-0 z-50'}`}>
+                <div className={`absolute top-8 right-3`}>
                     <IconButton icon={<LuMenu />} onclick={menuHandler} />
                 </div>
                 <SearchBar />
@@ -38,8 +50,19 @@ const Menu = () => {
             </div>
             <div className='w-full'>
                 <ThemeToggleBtn />
-                <IconTextButton text='Sign Out' icon={<FaSignOutAlt />} />
+                <IconTextButton text='Sign Out' icon={<FaSignOutAlt />} onClick={signOutHandeler} name='' />
             </div>
+            </div>  
+        : <div className={` opacity-0 transition-opacity ${!menu && 'absolute top-0 left-0 w-full h-full z-30 p-1 bg-background2 opacity-100'}`}>
+            {/* closed Menu */}
+            <div className=' w-full flex flex-col items-center justify-between pt-7 pb-7 h-full'>
+                <IconButton icon={<LuMenu />} onclick={menuHandler} />
+                <div className='w-12'>
+                    <MiniBtnTheme/>
+                    <IconButton icon={<FaSignOutAlt />} onclick={signOutHandeler} />
+                </div>
+            </div>
+          </div> }
         </menu>
     );
 };

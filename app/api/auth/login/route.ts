@@ -2,7 +2,6 @@ import { ConnectToDB, unHashPassword } from "@/lib/utils";
 import User from "@/models/User";
 import { NextResponse } from "next/server";
 import { NextApiResponse } from "next";
-import { cookies } from "next/headers";
 var cookie = require("cookie");
 var jwt = require('jsonwebtoken');
 export async function POST( req:Request , res:NextApiResponse){

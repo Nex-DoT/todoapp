@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { Button } from '@nextui-org/button';
 import { Calendar} from "@nextui-org/calendar";
 import { TimeInput} from "@nextui-org/date-input";
@@ -21,23 +21,37 @@ const InputTask = () => {
   let dateString = today.toISOString().split('T')[0];
   let [date, setDate] = React.useState(parseDate(dateString));
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([""]));
+  const selectedValue = React.useMemo(
+    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+    [selectedKeys]
+    
+  );
   let [data , setData ] = React.useState({
+    email: state.email,
     task: '',
     isImportant: false,
-    date: `${date}`,
-    time: time,
+    date:`${date}`,
+    time: '',
     description:'',
-    list: selectedKeys
+    list: `${selectedValue}`
   });
     const [open , setOpen] = React.useState({
         clock: false,
         Calendar: false,
     })
+      // Use useEffect to update `data.list` whenever `selectedKeys` changes
+  useEffect(() => {
+    setData(prevData => ({
+      ...prevData,
+      list: Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+    }));
+  }, [selectedKeys]);
     const handleTime = (value: any)=>{
       const formativeTime = formatTime(value);
 
       setTime(value);
       console.log(formativeTime);
+      setData({...data , time: formativeTime})
       
     }
     const formatTime = (timeObj:any) => {
@@ -48,12 +62,45 @@ const InputTask = () => {
       const formattedMinute = minute.toString().padStart(2, '0');
       return `${formattedHour}:${formattedMinute} ${period}`;
     };
-  const selectedValue = React.useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-    [selectedKeys]
-  );
-    const plusHandeler= ()=>{
-
+    const plusHandeler = async () => {
+      console.log(selectedKeys);
+      console.log(selectedValue)
+      
+      try {
+        const res = await fetch('api/event/task', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' },
+        });
+    
+        if (!res.ok) {
+          // Handle HTTP errors
+          console.error('HTTP error', res.status, res.statusText);
+          return;
+        }
+    
+        const text = await res.text();
+        if (!text) {
+          // Handle empty response
+          console.error('Empty response');
+          return;
+        }
+    
+        let json;
+        try {
+          json = JSON.parse(text);
+        } catch (e) {
+          // Handle JSON parse error
+          console.error('JSON parse error', e);
+          return;
+        }
+    
+        console.log(json);
+    
+      } catch (error) {
+        // Handle network errors or other fetch-related errors
+        console.error('Fetch error', error);
+      }
     }
     const toggelHandeler = (e?: React.MouseEvent<HTMLButtonElement>): void => {
         const buttonName = (e?.target as HTMLButtonElement).name;
@@ -84,7 +131,7 @@ const InputTask = () => {
                     selectedKeys={selectedKeys}
                     onSelectionChange={setSelectedKeys as any}
                 >
-                    {state.list.map( (item:any) => <DropdownItem key={item.name}>{item.name}</DropdownItem>)}
+                    {state.list[0] && state.list.map( (item:any) => <DropdownItem key={item.name}>{item.name}</DropdownItem>)}
                     
                 </DropdownMenu>
                 </Dropdown>
