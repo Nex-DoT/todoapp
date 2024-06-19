@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
-import ContextProviderApp from "@/context/context";
+import { context } from "@/context/context";
 export interface ProvidersProps {
 	children: React.ReactNode;
 	themeProps?: ThemeProviderProps;
@@ -13,12 +13,33 @@ export interface ProvidersProps {
 
 export function Providers({ children, themeProps }: ProvidersProps) {
 	const router = useRouter()
+	const {state , dispatch} = context();
+	useEffect(() => {
+		const fetchData = async () => {
+			if(state.email === '' && window.location.pathname !== '/signup'){
+				try {
+					const response = await fetch('api/auth/verify');
+					const data = await response.json();
+					console.log(data);
+					if(data.status === 'failed'){
+						window.location.href = '/signup';
+					} else {
+						dispatch({type:'ADDEMAIL', payload: data.user.email });
+						dispatch({type:'SETTASK', payload: data.user.task});
+						dispatch({type:'SETLIST', payload: data.user.list});
+						dispatch({type:'SETNOTE', payload: data.user.notes});
+					}
+				} catch (error) {
+					console.error(error);
+				}
+			}
+		};
 	
+		fetchData();
+	}, [state.email, dispatch]);
 	return (
 		<NextUIProvider navigate={router.push}>
-			<ContextProviderApp>
 				<NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
-			</ContextProviderApp>
 		</NextUIProvider>
 	);
 }

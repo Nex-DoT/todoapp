@@ -3,7 +3,7 @@ import { ConnectToDB } from "@/lib/utils";
 import { tokenVerify } from "@/lib/utils";
 import List from "@/models/List";
 import Task from "@/models/Task";
-
+import Note from "@/models/Note";
 export async function GET(req: NextRequest, res: NextResponse) {
     try {
         const requestHeaders = new Headers(req.headers);
@@ -36,6 +36,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         const user = {
             list: await List.find({ email: verify.email }).catch(e => { throw new Error('Error fetching lists') }),
             task: await Task.find({ email: verify.email }).catch(e => { throw new Error('Error fetching tasks') }),
+            notes: await Note.find({ email: verify.email }).catch(e => { throw new Error('Error fetching tasks') }),
             email: verify.email
         }
 

@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Title from '../atom/Title';
 import CheckButton from '../atom/CheckButton';
-const TaskSection = () => {
+import { context } from '@/context/context';
+
+const TaskSection = ({tasks}:any) => {
+  
+
     return (
-        <div className='w-full p-4 '>
+        <div className='w-full p-4'>
             {/* section for task */}
-            <div className='m-5 h-80'>
-                <CheckButton/>
+            <div className='m-1 h-80'>
+                {tasks.tasks.map((item: any, index: number) => (
+                    <CheckButton key={index} data={item} />
+                ))}
             </div>
-            <Title text='COMPLITED' size={4}/>
-            <hr className=' border-primary-2  border-opacity-30' />
+            <Title text='COMPLITED' size={4} />
+            <hr className='border-primary-2 border-opacity-30' />
             {/* section for complited Task */}
-            <div className='m-5 opacity-60'>
-                <CheckButton/>
-                <CheckButton/>
+            <div className='m-1 opacity-60'>
+                {tasks.complitedTask.map((item: any, index: number) => (
+                    <CheckButton key={index} data={item} />
+                ))}
             </div>
-            
         </div>
     );
 };
