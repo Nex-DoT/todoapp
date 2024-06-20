@@ -4,11 +4,13 @@ import Title from './Title';
 import { Button } from '@nextui-org/button';
 import { MenuItemType } from '@/types';
 import TaskCounter from './TaskCounter';
-const MenuItems = ({text , icon}:MenuItemType) => {
+const MenuItems = ({text , icon , name , onClick }:MenuItemType) => {
     return (
         <Button 
             variant={'light'}
             className='w-full flex items-center justify-between'
+            name={name}
+            onClick={onClick}
             endContent={
                 <TaskCounter/>
             }

@@ -4,8 +4,8 @@ import { PiStarBold } from "react-icons/pi";
 import { IoHome } from "react-icons/io5";
 
 export const DataNameMenu = [
-    {name : 'Tasks' , icon: <IoHome/>},
-    {name : 'Today' , icon: <FaTasks/>},
-    {name : 'Important' , icon: <PiStarBold/>},
-    {name : 'Sticky Nots' , icon: <FaRegNoteSticky/>},
+    {name : 'Tasks' , icon: <IoHome/> , route:'/'},
+    {name : 'Today' , icon: <FaTasks/> , route:'today'},
+    {name : 'Important' , icon: <PiStarBold/> , route:'important'},
+    {name : 'Sticky Nots' , icon: <FaRegNoteSticky/> , route:'stickynots'},
 ]

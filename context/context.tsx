@@ -30,10 +30,7 @@ const reducer = (state:any, action:any) => {
         }
         return {...state , tasks:[...state.task]};
     case 'ADDNOTE':
-        if(!state.notes.find((item:any)=> item.name === action.payload)) {
-          state.notes.push(action.payload)
-        }
-        return {...state , notes:[...state.notes]};
+          return{...state , notes:[...state.notes , action.payload]}
     case 'ADDEMAIL':
        return{...state , email: action.payload}
     default:
