@@ -6,7 +6,7 @@ import TaskCounter from '../atom/TaskCounter';
 const TitleSection = ({path}:any) => {
 
     return (
-        <div className='flex mt-11 pl-4 items-center gap-4'>
+        <div className='flex pt-7 pl-4 items-center gap-4'>
             <Title text={path === '' ? 'Tasks' : path} size={1} />
             <TaskCounter task={3} />
         </div>
