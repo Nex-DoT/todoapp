@@ -4,9 +4,10 @@ import { Chip } from "@nextui-org/chip";
 import { LuAlarmClock } from "react-icons/lu";
 import { IoIosCalendar } from "react-icons/io";
 import { CiCircleList } from "react-icons/ci";
+import { context } from '@/context/context';
 
 interface CheckButtonProps {
-    data?: {
+    data: {
         task: string;
         isImportant: boolean;
         isDone: boolean;
@@ -17,6 +18,7 @@ interface CheckButtonProps {
 }
 
 const CheckButton: React.FC<CheckButtonProps> = ({ data }) => {
+    const {state , dispatch} = context()
     if (!data) {
         console.error("Data is undefined or null.");
         return null;
@@ -32,7 +34,7 @@ const CheckButton: React.FC<CheckButtonProps> = ({ data }) => {
     };
 
     return (
-        <div className='w-full flex items-center justify-between h-14 hover:bg-background2 rounded-lg cursor-pointer transition-colors pl-3'>
+        <div onClick={()=>dispatch({type:"SETEDITOR" , payload:data})} className='w-full flex items-center justify-between h-14 hover:bg-background2 rounded-lg cursor-pointer transition-colors pl-3'>
             <Checkbox isSelected={check} onValueChange={setCheck} defaultSelected  lineThrough>
                 <p>{task}</p>
             </Checkbox>

@@ -6,7 +6,8 @@ const initialState = {
   email:'',
   tasks:[],
   list:[],
-  notes:[]
+  notes:[],
+  editor:{}
 };
 
 // 2. اضافه کردن state و action به reducer
@@ -19,6 +20,8 @@ const reducer = (state:any, action:any) => {
           return {...state , tasks : action.payload}
     case 'SETNOTE':
           return {...state , notes : action.payload}
+    case 'SETEDITOR': 
+          return {...state , editor: action.payload}
     case 'ADDLIST':
         if(!state.list.find((item:any)=> item.name === action.payload.name)){
             state.list.push(action.payload);

@@ -4,14 +4,14 @@ import CheckButton from '../atom/CheckButton';
 import { context } from '@/context/context';
 
 const TaskSection = ({tasks}:any) => {
-  
+  const {state , dispatch} = context();
 
     return (
         <div className='w-full p-4'>
             {/* section for task */}
             <div className='m-1 h-80'>
-                {tasks.tasks.map((item: any, index: number) => (
-                    <CheckButton key={index} data={item} />
+                {tasks.tasks.map((item: any) => (
+                    <CheckButton key={item._id} data={item}/>
                 ))}
             </div>
             <Title text='COMPLITED' size={4} />

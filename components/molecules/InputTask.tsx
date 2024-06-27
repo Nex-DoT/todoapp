@@ -24,7 +24,6 @@ const InputTask = () => {
   const selectedValue = React.useMemo(
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
     [selectedKeys]
-    
   );
   let [data , setData ] = React.useState({
     email: state.email,

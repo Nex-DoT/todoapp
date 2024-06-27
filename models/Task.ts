@@ -30,6 +30,9 @@ const TaskSchema = new Schema({
   description: {
     type: String,  
     required: false,
+  },
+  subtask:{
+    type: Object, 
   }
 }, { timestamps: true }); 
 

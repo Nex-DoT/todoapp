@@ -28,3 +28,22 @@ export async function POST( req: NextRequest, res: NextResponse) {
     const newTask = await Task.create({email , time , list , task , date , description , isImportant ,  isDone:false,});
     return NextResponse.json({status:'200' , message:' your Task is successfully created.', newTask})
 }
+
+export async function PATCH(req :NextRequest , res :NextResponse){
+    const body = await req.json();
+
+    try{
+        await ConnectToDB();
+    }catch(err){
+        return NextResponse.json({message:'Error connecting to DB'})
+    }
+
+    const {_id }= body;
+    console.log(body);
+    
+    const taskUpdate = await Task.findByIdAndUpdate( _id,
+                                                     {$set : body} ,
+                                                     {new:true , runValidators: true});
+    
+    return NextResponse.json({status:'200' , message:'Task update successfully', taskUpdate})
+}
