@@ -28,14 +28,18 @@ const reducer = (state:any, action:any) => {
         }
         return {...state , list:[...state.list]};
     case 'ADDTASK':
-        if(!state.tasks.find((item:any)=> item.name === action.payload)) {
-          state.task.push(action.payload)
-        }
-        return {...state , tasks:[...state.task]};
+        return {...state , tasks:[...state.tasks , action.payload]};
     case 'ADDNOTE':
           return{...state , notes:[...state.notes , action.payload]}
     case 'ADDEMAIL':
        return{...state , email: action.payload}
+    case 'UPDATETASK':
+       return {
+         ...state,
+         tasks: state.tasks.map((task: any) =>
+           task._id === action.payload._id ? { ...task, ...action.payload } : task
+         )
+       }
     default:
       return state;
   }

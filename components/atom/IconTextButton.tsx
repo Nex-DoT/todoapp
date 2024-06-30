@@ -1,8 +1,7 @@
 import React from 'react';
 import { Button } from '@nextui-org/button';
 import Icon from './Icon';
-import { MenuItemType } from '@/types';
-const IconTextButton = ({text , icon , name , onClick}:MenuItemType) => {
+const IconTextButton = ({text , icon , name , onClick}:any) => {
     return (
         <Button 
                 variant='light'

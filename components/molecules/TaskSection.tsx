@@ -18,7 +18,7 @@ const TaskSection = ({tasks}:any) => {
             <hr className='border-primary-2 border-opacity-30' />
             {/* section for complited Task */}
             <div className='m-1 opacity-60'>
-                {tasks.complitedTask.map((item: any, index: number) => (
+                {tasks.completedTask.map((item: any, index: number) => (
                     <CheckButton key={index} data={item} />
                 ))}
             </div>

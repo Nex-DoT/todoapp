@@ -14,7 +14,7 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-o
 import { Button } from '@nextui-org/button';
 import { BsChevronDown } from "react-icons/bs";
 
-const Editor = () => {
+const Editor = ({open}:any) => {
     const { state, dispatch } = context();
     const [data, setData] = useState(state.editor);
     const [selectedKeys, setSelectedKeys] = useState(new Set([""]));
@@ -35,7 +35,9 @@ const Editor = () => {
         setData({ ...data, task: e.target.value });
     };
 
-    const closeHandler = () => {};
+    const closeHandler = () => {
+        open(false);
+    };
 
     const changeCalendar = (e: any) => {
         const year = e.year;
@@ -63,7 +65,7 @@ const Editor = () => {
                                 })
         const newData = await res.json();
         console.log(newData);
-        
+        dispatch({type:'UPDATETASK' , payload: newData.taskUpdate})
     }
     return (
         <div className='w-[28rem] p-3'>

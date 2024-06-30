@@ -15,7 +15,7 @@ import IconButton from '../atom/IconButton';
 import IconTextButton from '../atom/IconTextButton';
 import Task from '@/models/Task';
 const InputTask = () => {
-  const {state} = context();
+  const {state , dispatch} = context();
   const [time , setTime] = useState();
   let today = new Date();
   let dateString = today.toISOString().split('T')[0];
@@ -62,8 +62,6 @@ const InputTask = () => {
       return `${formattedHour}:${formattedMinute} ${period}`;
     };
     const plusHandeler = async () => {
-      console.log(selectedKeys);
-      console.log(selectedValue)
       
       try {
         const res = await fetch('api/event/task', {
@@ -95,6 +93,7 @@ const InputTask = () => {
         }
     
         console.log(json);
+        dispatch({type:'ADDTASK' , payload: json.newTask})
     
       } catch (error) {
         // Handle network errors or other fetch-related errors

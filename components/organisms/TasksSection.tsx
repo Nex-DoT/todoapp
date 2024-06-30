@@ -11,38 +11,43 @@ const Today = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart
 
 const TasksSection = () => {
     const { state } = context();
+    const [open, setOpen] = useState(false);
     const [task, setTask] = useState({
         tasks: [],
-        complitedTask: [],
+        completedTask: [],
     });
 
     const path = window.location.pathname.split('/')[1];
+    
+    useEffect(() => {
+        if (state.editor.task === '') {
+            setOpen(false);
+        } else {
+            setOpen(true);
+        }
+    }, [state.editor.task]);
 
     useEffect(() => {
-        let newTasks = [];
-        let newComplitedTask = [];
-        
-        if (path === '') {
-            newTasks = state.tasks.filter((task: any) => !task.isDone);
-            newComplitedTask = state.tasks.filter((task: any) => task.isDone);
-        } else if (path === 'important') {
-            newTasks = state.tasks.filter((task: any) => !task.isDone && task.isImportant);
-            newComplitedTask = state.tasks.filter((task: any) => task.isDone && task.isImportant);
-        } else if (path === 'today') {
-            newTasks = state.tasks.filter((task: any) => !task.isDone && task.date === Today);
-            newComplitedTask = state.tasks.filter((task: any) => task.isDone && task.date === Today);
-        }
+        const filterTasks = () => {
+            let tasks = [];
+            let completedTask = [];
 
-        // Check if the task state is actually changing to prevent unnecessary updates
-        if (
-            newTasks.length !== task.tasks.length ||
-            newComplitedTask.length !== task.complitedTask.length ||
-            !newTasks.every((t, i) => t === task.tasks[i]) ||
-            !newComplitedTask.every((t, i) => t === task.complitedTask[i])
-        ) {
-            setTask({ tasks: newTasks, complitedTask: newComplitedTask });
-        }
-    }, [state, path]);
+            if (path === '') {
+                tasks = state.tasks.filter((task: any) => !task.isDone);
+                completedTask = state.tasks.filter((task: any) => task.isDone);
+            } else if (path === 'important') {
+                tasks = state.tasks.filter((task: any) => !task.isDone && task.isImportant);
+                completedTask = state.tasks.filter((task: any) => task.isDone && task.isImportant);
+            } else if (path === 'today') {
+                tasks = state.tasks.filter((task: any) => !task.isDone && task.date === Today);
+                completedTask = state.tasks.filter((task: any) => task.isDone && task.date === Today);
+            }
+            
+            setTask({ tasks, completedTask });
+        };
+
+        filterTasks();
+    }, [state.tasks, path]);
 
     return (
         <div className='h-full w-full flex'>
@@ -55,7 +60,7 @@ const TasksSection = () => {
                     <InputTask />
                 </div>
             </div>
-            <Editor />
+            {state.editor.task && open && <Editor open={setOpen} />}
         </div>
     );
 };

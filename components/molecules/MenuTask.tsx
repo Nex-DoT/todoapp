@@ -2,6 +2,7 @@ import React from 'react';
 import Title from '../atom/Title';
 import MenuItems from '../atom/MenuItems';
 import { DataNameMenu } from '@/lib/MenuDataName';
+import Link from 'next/link';
 const MenuTask = () => {
     const data = DataNameMenu;
     const routeHandler = (e:any)=>{
@@ -13,7 +14,7 @@ const MenuTask = () => {
         <div className='mb-4'>
             <Title text='TASKS' size={4}/>
             {
-                data.map(item => <MenuItems key={item.name} text={item.name} icon={item.icon} name={item.route as string} onClick={routeHandler}/>)
+                data.map(item => <Link key={item.name} href={item.route}><MenuItems  text={item.name} icon={item.icon} /></Link> )
             }
         </div>
     );

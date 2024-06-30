@@ -13,10 +13,8 @@ export type authLoginType={
   password:string
 }
 export type MenuItemType = {
-  name: string,
   text: any,
   icon: React.ReactElement,
-  onClick: (e?: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
 export type ListTaskType ={
