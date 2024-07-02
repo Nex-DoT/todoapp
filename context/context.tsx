@@ -34,6 +34,7 @@ const reducer = (state:any, action:any) => {
     case 'ADDEMAIL':
        return{...state , email: action.payload}
     case 'UPDATETASK':
+       console.log('Updating Task:', action.payload);
        return {
          ...state,
          tasks: state.tasks.map((task: any) =>

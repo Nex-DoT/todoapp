@@ -44,19 +44,21 @@ const TasksSection = () => {
             }
             
             setTask({ tasks, completedTask });
+            console.log('Tasks:', tasks);
+            console.log('Completed Tasks:', completedTask);
         };
 
         filterTasks();
     }, [state.tasks, path]);
 
     return (
-        <div className='h-full w-full flex'>
+        <div className='h-full w-full flex relative'>
             <div className='h-full flex flex-col items-center justify-between w-full'>
                 <div className='w-full'>
                     <TitleSection path={path} />
                     <TaskSection tasks={task} />
                 </div>
-                <div className='w-full relative pl-6 pr-6'>
+                <div className='w-full relative pr-3 pl-3'>
                     <InputTask />
                 </div>
             </div>

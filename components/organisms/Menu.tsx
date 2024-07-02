@@ -29,7 +29,7 @@ const Menu = ({ menuOpen, toggleMenu }:any) => {
 
     const data = DataNameMenu;
     return (
-        <menu className={`overflow-hidden h-full ${menuWidth} relative transition-all bg-background2 p-4`}>
+        <menu className={`overflow-hidden h-full ${menuWidth}  absolute z-20 transition-all bg-background2 p-4 md:relative`}>
             {menuOpen ? (
                 <div className='w-full h-full flex flex-col items-center justify-between'>
                     {/* opened Menu */}

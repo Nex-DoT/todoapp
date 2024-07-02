@@ -57,18 +57,36 @@ const Editor = ({open}:any) => {
         }
     };
 
-    const saveHandeler= async()=>{
-        const res = await fetch('api/event/task' , {
-                                    method: 'PATCH',
-                                    body: JSON.stringify(data),
-                                    headers: {'Content-Type' : 'application/json'}
-                                })
-        const newData = await res.json();
-        console.log(newData);
-        dispatch({type:'UPDATETASK' , payload: newData.taskUpdate})
-    }
+    const saveHandeler = async () => {
+        
+        const res = await fetch('api/event/task', {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: { 'Content-Type': 'application/json' }
+        });
+    
+        if (!res.ok) {
+            console.error('Error:', res.statusText);
+            return;
+        }
+    
+        const text = await res.text();
+        if (!text) {
+            console.error('Empty response');
+            return;
+        }
+    
+        try {
+            const newData = JSON.parse(text);
+            console.log(newData);
+            dispatch({ type: 'UPDATETASK', payload: newData.taskUpdate });
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+        }
+    };
+    
     return (
-        <div className='w-[28rem] p-3'>
+        <div className='w-[17rem] p-2 h-full md:w-[22rem] md:p-3 md:relative absolute top-0 right-0 z-20'>
             <div className='bg-background2 w-full h-full rounded-lg shadow-lg relative p-5 flex flex-col justify-between gap-3'>
                 <div>
                     <div className='flex items-center justify-between opacity-60'>

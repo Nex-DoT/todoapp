@@ -26,9 +26,9 @@ export default function RootLayout({
       <body className="h-full overflow-y-hidden !bg-background1 font-Inter">
         <ContextProviderApp>
           <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-            <div className="relative h-screen flex transition-all duration-300">
+            <div className="relative h-screen flex transition-all duration-300 overflow-hidden">
               <Menu menuOpen={menuOpen} toggleMenu={toggleMenu} />
-              <main className={`h-full transition-all duration-300 ${menuOpen ? 'w-[calc(100%-20rem)]' : 'w-[calc(100%-3.5rem)]'}`}>
+              <main className={`h-full transition-all duration-300 ${menuOpen ? 'w-[calc(100%-20rem)]' : 'w-[calc(100%-3.5rem)]'} ml-12 md:${menuOpen ? 'w-[calc(100%-20rem)]' : 'w-[calc(100%-3.5rem)]'} md:ml-0`}>
                 {children}
               </main>
             </div>
