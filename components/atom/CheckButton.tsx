@@ -20,19 +20,22 @@ interface CheckButtonProps {
 
 const CheckButton: React.FC<CheckButtonProps> = ({ data }) => {
     const { state, dispatch } = context();
-    
+    const { task, isImportant, isDone, time, date, list } = data;
+
     // تعریف اولیه state ها بدون شرایط
     const [icon, setIcon] = useState(data.isImportant);
     const [check, setCheck] = useState(data.isDone);
 
     // تعریف useEffect بدون شرط
     useEffect(() => {
-        setCheck(data.isDone);
-        if (window.location.pathname === '/important') {
-            setIcon(data.isImportant);
-        }
-    }, [data.isDone, data.isImportant, window.location.pathname]);
+        setCheck(isDone);
+    }, [isDone]);
 
+    useEffect(() => {
+        if (window.location.pathname === '/important') {
+            setIcon(isImportant);
+        }
+    }, [isImportant, state]);
     const changeTheCheck = async () => {
         setCheck(!check); // ابتدا وضعیت چک‌باکس را تغییر دهید تا انیمیشن اجرا شود
 

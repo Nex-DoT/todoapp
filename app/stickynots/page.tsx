@@ -57,7 +57,7 @@ const Sticky = () => {
         <div> 
             <TitleSection path={path}/>
             <div className='w-full h-full p-4 gap-5 flex-wrap flex items-center justify-start'>
-                {state.notes.map( (note:any)=> <Nots ket={note._id} data={note}/> )}
+                {state.notes.map( (note:any)=> <Nots key={note._id} data={note}/> )}
                 <div className=' w-60 h-60 flex items-center justify-center bg-background2 hover:opacity-80 transition-opacity cursor-pointer relative before:absolute before:bg-background2 before:w-3 before:h-3 before:top-0 before:right-0 before:shadow-lg overflow-hidden' onClick={onOpen}>
                     <CiCirclePlus size={40}/>
                 </div>
