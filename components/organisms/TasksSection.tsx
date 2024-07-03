@@ -5,11 +5,12 @@ import { context } from '@/context/context';
 import InputTask from '../molecules/InputTask';
 import TitleSection from '../molecules/TitleSection';
 import TaskSection from '../molecules/TaskSection';
-
+import { useRouter , usePathname } from 'next/navigation';
 const date = new Date();
 const Today = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
 const TasksSection = () => {
+    
     const { state } = context();
     const [open, setOpen] = useState(false);
     const [task, setTask] = useState({
@@ -17,7 +18,7 @@ const TasksSection = () => {
         completedTask: [],
     });
 
-    const path = window.location.pathname.split('/')[1];
+    const path = usePathname() as string;
     
     useEffect(() => {
         if (state.editor.task === '') {
@@ -32,13 +33,13 @@ const TasksSection = () => {
             let tasks = [];
             let completedTask = [];
 
-            if (path === '') {
+            if (path === '/') {
                 tasks = state.tasks.filter((task: any) => !task.isDone);
                 completedTask = state.tasks.filter((task: any) => task.isDone);
-            } else if (path === 'important') {
+            } else if (path === '/important') {
                 tasks = state.tasks.filter((task: any) => !task.isDone && task.isImportant);
                 completedTask = state.tasks.filter((task: any) => task.isDone && task.isImportant);
-            } else if (path === 'today') {
+            } else if (path === '/today') {
                 tasks = state.tasks.filter((task: any) => !task.isDone && task.date === Today);
                 completedTask = state.tasks.filter((task: any) => task.isDone && task.date === Today);
             }
@@ -55,7 +56,7 @@ const TasksSection = () => {
         <div className='h-full w-full flex relative'>
             <div className='h-full flex flex-col items-center justify-between w-full'>
                 <div className='w-full'>
-                    <TitleSection path={path} />
+                    <TitleSection />
                     <TaskSection tasks={task} />
                 </div>
                 <div className='w-full relative pr-3 pl-3'>
