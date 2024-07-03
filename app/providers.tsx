@@ -2,6 +2,7 @@
 import * as React from "react";
 import { NextUIProvider } from "@nextui-org/system";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useRouter } from 'next/navigation';
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
@@ -16,13 +17,13 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 	const {state , dispatch} = context();
 	useEffect(() => {
 		const fetchData = async () => {
-			if(state.email === '' && window.location.pathname !== '/signup'){
+			if(state.email === '' && usePathname() !== '/signup'){
 				try {
 					const response = await fetch('api/auth/verify');
 					const data = await response.json();
 					console.log(data);
 					if(data.status === 'failed'){
-						window.location.href = '/signup';
+						router.replace('/signup')
 					} else {
 						dispatch({type:'ADDEMAIL', payload: data.user.email });
 						dispatch({type:'SETTASK', payload: data.user.task});
