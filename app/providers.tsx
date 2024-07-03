@@ -12,7 +12,7 @@ export interface ProvidersProps {
 }
 
 export function Providers({ children, themeProps }: ProvidersProps) {
-	const router = useRouter()
+    const router = useRouter();
 	const {state , dispatch} = context();
 	useEffect(() => {
 		const fetchData = async () => {
@@ -37,7 +37,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 		};
 	
 		fetchData();
-	}, [state.email, dispatch]);
+	}, [state.email, dispatch ]);
 	return (
 		<NextUIProvider navigate={router.push}>
 				<NextThemesProvider {...themeProps}>{children}</NextThemesProvider>

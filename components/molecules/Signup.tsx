@@ -4,6 +4,7 @@ import { useState } from 'react';
 import {Input} from "@nextui-org/input";
 import { IoIosMail } from "react-icons/io";
 import { TiUserOutline } from "react-icons/ti";
+import { useRouter } from 'next/router';
 import { PiPasswordFill } from "react-icons/pi";
 import { VscEye } from "react-icons/vsc";
 import { VscEyeClosed } from "react-icons/vsc";
@@ -44,6 +45,7 @@ const Signup = ({onclick}:{onclick:()=>void}) => {
     
                 try {
                     newdata = JSON.parse(text);
+                    if(newdata.status === 'success') onclick()
                 } catch (e) {
                     console.error('Error parsing JSON response:', e);
                     return;

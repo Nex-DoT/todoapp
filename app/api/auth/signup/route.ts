@@ -26,6 +26,6 @@ export async function POST( req: NextRequest){
     }else{
         const hashPass = await hashPassword(body.password);
         const newUser = await User.create({username:body.username , email:body.email , password:hashPass , createdAt:new Date})
-        return NextResponse.json({ status:'200' , message:'User created successfully' , user:newUser});
+        return NextResponse.json({ status:'success' , message:'User created successfully' , user:newUser});
     }
 }

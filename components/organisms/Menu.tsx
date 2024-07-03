@@ -16,7 +16,6 @@ import { context } from '@/context/context';
 
 const Menu = ({ menuOpen, toggleMenu }:any) => {
     const { dispatch } = context();
-
     const signOutHandeler = async () => {
         const res = await fetch('api/auth/signout');
         const data = await res.json();
