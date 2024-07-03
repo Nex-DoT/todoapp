@@ -71,3 +71,10 @@ export async function tokenVerify(token:string , secretKey:string) {
     return false
   }
 }
+
+export function truncateText(text:string, maxLength:number) {
+  if (text.length > maxLength) {
+      return text.slice(0, maxLength) + '...';
+  }
+  return text;
+}

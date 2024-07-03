@@ -28,6 +28,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 						dispatch({type:'SETTASK', payload: data.user.task});
 						dispatch({type:'SETLIST', payload: data.user.list});
 						dispatch({type:'SETNOTE', payload: data.user.notes});
+						dispatch({type:'SETUSERNAME', payload: data.user.username});
 					}
 				} catch (error) {
 					console.error(error);

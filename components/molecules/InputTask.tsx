@@ -30,7 +30,7 @@ const InputTask = () => {
   );
   let [data , setData ] = React.useState({
     email: state.email,
-    task: '',
+    task: 'new Task',
     isImportant: false,
     date:`${date}`,
     time: '',
@@ -65,6 +65,9 @@ const InputTask = () => {
       return `${formattedHour}:${formattedMinute} ${period}`;
     };
     const plusHandeler = async () => {
+      if(data.list === ''){
+        return;
+      }
       
       try {
         const res = await fetch('api/event/task', {

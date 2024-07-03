@@ -4,6 +4,7 @@ import { createContext } from "react";
 // 1. تغییر نام متغیر به initialState
 const initialState = {
   email:'',
+  username:'',
   tasks:[],
   list:[],
   notes:[],
@@ -22,6 +23,8 @@ const reducer = (state:any, action:any) => {
           return {...state , notes : action.payload}
     case 'SETEDITOR': 
           return {...state , editor: action.payload}
+    case 'SETUSERNAME': 
+          return {...state , username: action.payload}
     case 'ADDLIST':
         if(!state.list.find((item:any)=> item.name === action.payload.name)){
             state.list.push(action.payload);

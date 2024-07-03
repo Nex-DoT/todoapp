@@ -10,7 +10,7 @@ const pages = () => {
     }
 
     return (
-        <div className=' absolute w-full h-full left-0 bg-background1 flex items-center justify-center'>
+        <div className=' absolute w-full h-full left-0 bg-background1 flex items-center justify-center z-30'>
                 <div className=' bg-background2 w-80 rounded-md shadow-sm p-5 flex items-center justify-between relative'>
                     {/* <Signup onclick={changeHandeler}/> */}
                     {login ?  <Login onclick={changeHandeler}/> : <Signup onclick={changeHandeler}/>}
