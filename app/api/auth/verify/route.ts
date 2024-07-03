@@ -2,13 +2,14 @@ import { NextResponse, NextRequest } from "next/server";
 import { ConnectToDB } from "@/lib/utils";
 import { tokenVerify } from "@/lib/utils";
 import List from "@/models/List";
+import { headers } from "next/headers";
 import Task from "@/models/Task";
 import Note from "@/models/Note";
 import User from "@/models/User";
 export async function GET(req: NextRequest, res: NextResponse) {
     try {
-        const requestHeaders = new Headers(req.headers);
-        const cookie = requestHeaders.get('cookie');
+        const headersList = headers()
+        const cookie = headersList.get('cookie');
         
         if (!cookie) {
             return NextResponse.json({ status: 'failed', message: 'No cookie provided' });

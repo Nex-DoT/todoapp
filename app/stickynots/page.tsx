@@ -52,7 +52,7 @@ const Sticky = () => {
             console.error('Error fetching data:', error);
         }
     }
-    const path = window.location.pathname.split('/')[1];
+    // const path = window.location.pathname.split('/')[1];
     return (
         <div> 
             <TitleSection/>
