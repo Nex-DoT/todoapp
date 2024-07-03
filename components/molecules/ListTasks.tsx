@@ -72,7 +72,7 @@ const ListTasks =  () => {
             className="w-full  max-h-[200px]">
                 <div>
                     {
-                        state.list.map((item:any) => <ListTask name={item.name}  color={`#${item.color}`}/>)
+                        state.list.map((item:any) => <ListTask key={item.name} name={item.name}  color={`#${item.color}`}/>)
                     }
                 </div>
             </ScrollShadow>

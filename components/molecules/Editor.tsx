@@ -14,22 +14,22 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-o
 import { Button } from '@nextui-org/button';
 import { BsChevronDown } from "react-icons/bs";
 
-const Editor = ({open}:any) => {
+const Editor = ({open}: any) => {
     const { state, dispatch } = context();
     const [data, setData] = useState(state.editor);
     const [selectedKeys, setSelectedKeys] = useState(new Set([""]));
     const selectedValue = useMemo(
-      () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-      [selectedKeys]
+        () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+        [selectedKeys]
     );
 
     useEffect(() => {
         setData(state.editor);
-
     }, [state.editor]);
-    useEffect(()=>{
-        setData({...data , list: selectedValue})
-    },[selectedValue])
+
+    useEffect(() => {
+        setData((prevData:any) => ({ ...prevData, list: selectedValue }));
+    }, [selectedValue]);
 
     const inputHandler = (e: any) => {
         setData({ ...data, task: e.target.value });
@@ -57,26 +57,25 @@ const Editor = ({open}:any) => {
         }
     };
 
-    const saveHandeler = async () => {
-        
-        const res = await fetch('api/event/task', {
-            method: 'PATCH',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
-        });
-    
-        if (!res.ok) {
-            console.error('Error:', res.statusText);
-            return;
-        }
-    
-        const text = await res.text();
-        if (!text) {
-            console.error('Empty response');
-            return;
-        }
-    
+    const saveHandler = async () => {
         try {
+            const res = await fetch('api/event/task', {
+                method: 'PATCH',
+                body: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (!res.ok) {
+                console.error('Error:', res.statusText);
+                return;
+            }
+
+            const text = await res.text();
+            if (!text) {
+                console.error('Empty response');
+                return;
+            }
+
             const newData = JSON.parse(text);
             console.log(newData);
             dispatch({ type: 'UPDATETASK', payload: newData.taskUpdate });
@@ -84,7 +83,7 @@ const Editor = ({open}:any) => {
             console.error('Error parsing JSON:', error);
         }
     };
-    
+
     return (
         <div className='w-[17rem] p-2 h-full md:w-[22rem] md:p-3 md:relative absolute top-0 right-0 z-20'>
             <div className='bg-background2 w-full h-full rounded-lg shadow-lg relative p-5 flex flex-col justify-between gap-3'>
@@ -93,13 +92,13 @@ const Editor = ({open}:any) => {
                         <Title size={1} text='Task:' />
                         <IconButton icon={<IoClose />} onclick={closeHandler} />
                     </div>
-                    <Input 
-                        type='text' 
-                        variant='bordered' 
+                    <Input
+                        type='text'
+                        variant='bordered'
                         value={data.task || ''} // Ensuring default value
-                        onChange={inputHandler} 
-                        label='List Name' 
-                        size='sm' 
+                        onChange={inputHandler}
+                        label='List Name'
+                        size='sm'
                     />
                     <Textarea
                         type='text'
@@ -110,24 +109,24 @@ const Editor = ({open}:any) => {
                     <div className='relative'>
                         <Dropdown>
                             <DropdownTrigger>
-                                <Button 
-                                    variant="bordered" 
+                                <Button
+                                    variant="bordered"
                                     className="capitalize w-full flex items-center justify-between mt-3"
                                 >
                                     <p>{data.date ? data.date : 'Select Date'}</p>
                                     <BsChevronDown />
                                 </Button>
                             </DropdownTrigger>
-                            <DropdownMenu 
+                            <DropdownMenu
                                 aria-label="Single selection example"
                                 variant="light"
                                 closeOnSelect={false}
                             >
                                 <DropdownItem textValue='calendar'>
-                                    <Calendar 
+                                    <Calendar
                                         aria-label="Date (Controlled)"
-                                        value={data.date ? parseDateIfValid(data.date) : undefined} 
-                                        onChange={changeCalendar} 
+                                        value={data.date ? parseDateIfValid(data.date) : undefined}
+                                        onChange={changeCalendar}
                                     />
                                 </DropdownItem>
                             </DropdownMenu>
@@ -136,15 +135,15 @@ const Editor = ({open}:any) => {
                     <div className='relative'>
                         <Dropdown>
                             <DropdownTrigger>
-                                <Button 
-                                    variant="bordered" 
+                                <Button
+                                    variant="bordered"
                                     className="capitalize w-full flex items-center justify-between mt-3"
                                 >
                                     <p>{data.list ? data.list : 'Select List'}</p>
                                     <BsChevronDown />
                                 </Button>
                             </DropdownTrigger>
-                            <DropdownMenu 
+                            <DropdownMenu
                                 aria-label="Single selection example"
                                 variant="light"
                                 disallowEmptySelection
@@ -153,24 +152,24 @@ const Editor = ({open}:any) => {
                                 onSelectionChange={setSelectedKeys as any}
                                 className='w-full'
                             >
-                                {state.list[0] && state.list.map((item: any) => <DropdownItem key={item.name}>{item.name}</DropdownItem>)}  
+                                {state.list[0] && state.list.map((item: any) => <DropdownItem key={item.name}>{item.name}</DropdownItem>)}
                             </DropdownMenu>
                         </Dropdown>
                     </div>
                     <div className='opacity-60 mt-4'>
                         <Title text='Subtask:' size={1} />
                     </div>
-                    <Input 
-                        className='mt-4' 
-                        type='text' 
-                        placeholder='Add New subTask' 
-                        variant='underlined' 
+                    <Input
+                        className='mt-4'
+                        type='text'
+                        placeholder='Add New subTask'
+                        variant='underlined'
                         startContent={<IconButton icon={<LuPlus />} onclick={subTaskHandler} />}
                     />
                 </div>
                 <div className='gap-2 flex'>
                     <Button className='w-1/2' variant='bordered'>Delete Task</Button>
-                    <Button className='w-1/2' variant='solid' color='primary' onClick={saveHandeler}>Save Changes</Button>
+                    <Button className='w-1/2' variant='solid' color='primary' onClick={saveHandler}>Save Changes</Button>
                 </div>
             </div>
         </div>
@@ -178,4 +177,3 @@ const Editor = ({open}:any) => {
 };
 
 export default Editor;
-

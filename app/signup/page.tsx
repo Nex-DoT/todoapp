@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import Signup from '@/components/molecules/Signup';
 import Login from '@/components/molecules/Login';
-const pages = () => {
+const Pages = () => {
     const [login ,setLogin] = useState(false);
     const changeHandeler = ()=>{
         setLogin(!login);
@@ -19,4 +19,4 @@ const pages = () => {
     );
 };
 
-export default pages;
+export default Pages;
