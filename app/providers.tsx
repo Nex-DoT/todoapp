@@ -14,10 +14,11 @@ export interface ProvidersProps {
 
 export function Providers({ children, themeProps }: ProvidersProps) {
     const router = useRouter();
+	const path= usePathname();
 	const {state , dispatch} = context();
 	useEffect(() => {
 		const fetchData = async () => {
-			if(state.email === '' && usePathname() !== '/signup'){
+			if(state.email === '' && path !== '/signup'){
 				try {
 					const response = await fetch('api/auth/verify');
 					const data = await response.json();
