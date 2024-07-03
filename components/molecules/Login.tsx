@@ -78,7 +78,7 @@ const Login = ({ onclick }: { onclick: () => void }) => {
                 }
             />
             <p className='text-xs'>
-                if you don't have an account <span className='text-primary-500 cursor-pointer underline' onClick={onclick}>click on me.</span>
+                if you dont have an account <span className='text-primary-500 cursor-pointer underline' onClick={onclick}>click on me.</span>
             </p>
             <button className='w-full h-10 bg-primary-400 rounded-md transition-colors hover:bg-primary-500' type='submit'>Login</button>
         </form>
