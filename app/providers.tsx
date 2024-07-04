@@ -12,7 +12,7 @@ export interface ProvidersProps {
   themeProps?: ThemeProviderProps;
 }
 
-export function Providers({ children, themeProps }: ProvidersProps) {
+export async function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
   const { state, dispatch } = context();
 
@@ -20,7 +20,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
     const fetchData = async () => {
       if (state.email === '' && window.location.pathname !== '/signup') {
         try {
-          const response = await fetch('/api/auth/verify'); // Added leading slash
+          const response = await fetch('/api/auth/verify' ,{ cache:'no-store'}); // Added leading slash
           const data = await response.json();
           console.log(data);
           if (data.status === 'failed') {
