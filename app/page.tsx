@@ -10,7 +10,7 @@ export default function Home() {
 		const fetchData = async () => {
 			if(state.email === '' && window.location.pathname !== '/signup'){
 				try {
-					const response = await fetch('api/auth/verify');
+					const response = await fetch('api/auth/verify', {cache: 'no-store'});
 					const data = await response.json();
 					console.log(data);
 					if(data.status === 'failed'){
