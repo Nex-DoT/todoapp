@@ -3,7 +3,7 @@ import { Button } from '@nextui-org/button';
 import { Input } from '@nextui-org/input';
 import Title from '@/components/atom/Title';
 import React from 'react';
-
+import { useEffect } from 'react';
 import { useState } from 'react';
 import Nots from '@/components/atom/Nots';
 import { CiCirclePlus } from "react-icons/ci";
@@ -18,6 +18,30 @@ const Sticky = () => {
         description:'',
         color:'FF5733',
     })
+    useEffect(() => {
+		const fetchData = async () => {
+			if(state.email === '' && window.location.pathname !== '/signup'){
+				try {
+					const response = await fetch('api/auth/verify', {cache: 'no-store'});
+					const data = await response.json();
+					console.log(data);
+					if(data.status === 'failed'){
+						window.location.href = '/signup';
+					} else {
+						dispatch({type:'ADDEMAIL', payload: data.user.email });
+						dispatch({type:'SETTASK', payload: data.user.task});
+						dispatch({type:'SETLIST', payload: data.user.list});
+						dispatch({type:'SETNOTE', payload: data.user.notes});
+						dispatch({type:'SETUSERNAME', payload: data.user.username});
+					}
+				} catch (error) {
+					console.error(error);
+				}
+			}
+		};
+	
+		fetchData();
+	}, [state.email, dispatch ]);
     const colorSethandeler = (color:string)=>{
         setListData({...listData , color: color});
         console.log(listData);    
