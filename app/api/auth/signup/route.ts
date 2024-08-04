@@ -13,7 +13,6 @@ export async function POST( req: NextRequest){
         return NextResponse.json({ status:'500' , message:'Error connecting to DB'});
     }
     const body = await req.json();
-    console.log(body);
     
     if(!body.username || !body.password || !body.email ){
         return NextResponse.json({ status:'500' , message:'your data is not valid' });
