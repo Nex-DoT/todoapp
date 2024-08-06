@@ -1,11 +1,13 @@
 "use client"
 import React, { useState , useEffect } from 'react';
 import { Button } from '@nextui-org/button';
+import { createTask } from '@/lib/serverActions';
 import { Calendar} from "@nextui-org/calendar";
 import { TimeInput} from "@nextui-org/date-input";
 import { parseDate} from "@internationalized/date";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem,} from "@nextui-org/dropdown";
 import { FaPlus } from 'react-icons/fa';
+import { useSession } from 'next-auth/react';
 import { LuAlarmClock } from "react-icons/lu";
 import { FaStar } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
@@ -13,10 +15,12 @@ import { FaCalendarDays } from "react-icons/fa6";
 import { context } from '@/context/context';
 import IconButton from '../atom/IconButton';
 import { AiOutlineMore } from "react-icons/ai";
-
+import { useTransition } from 'react';
 import IconTextButton from '../atom/IconTextButton';
-import Task from '@/models/Task';
 const InputTask = () => {
+  const [isPending , startTransition ] = useTransition();
+  const session = useSession();
+  const email = session.data?.user?.email
   const {state , dispatch} = context();
   const [time , setTime] = useState();
   const [more , setMore] = useState(false);
@@ -29,7 +33,7 @@ const InputTask = () => {
     [selectedKeys]
   );
   let [data , setData ] = React.useState({
-    email: state.email,
+    email: email,
     task: 'new Task',
     isImportant: false,
     date:`${date}`,
@@ -68,43 +72,18 @@ const InputTask = () => {
       if(data.list === ''){
         return;
       }
-      
-      try {
-        const res = await fetch('api/event/task', {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' },
+      if (email) {
+        startTransition(() => {
+          createTask(data).then((fetchedData) => {
+            console.log(fetchedData);
+            dispatch({type:'ADDTASK' , payload:fetchedData});
+          }).catch((error) => {
+            console.error("Failed to fetch data", error);
+          });
         });
-    
-        if (!res.ok) {
-          // Handle HTTP errors
-          console.error('HTTP error', res.status, res.statusText);
-          return;
-        }
-    
-        const text = await res.text();
-        if (!text) {
-          // Handle empty response
-          console.error('Empty response');
-          return;
-        }
-    
-        let json;
-        try {
-          json = JSON.parse(text);
-        } catch (e) {
-          // Handle JSON parse error
-          console.error('JSON parse error', e);
-          return;
-        }
-    
-        console.log(json);
-        dispatch({type:'ADDTASK' , payload: json.newTask})
-    
-      } catch (error) {
-        // Handle network errors or other fetch-related errors
-        console.error('Fetch error', error);
       }
+     
+    
     }
     const toggelHandeler = (e?: React.MouseEvent<HTMLButtonElement>): void => {
         const buttonName = (e?.target as HTMLButtonElement).name;

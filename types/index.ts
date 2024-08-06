@@ -13,6 +13,7 @@ export type authLoginType={
   password:string
 }
 export type MenuItemType = {
+  route:string,
   text: any,
   icon: React.ReactElement,
 }

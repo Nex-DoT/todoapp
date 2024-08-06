@@ -2,13 +2,13 @@
 import React  from 'react';
 import Title from '../atom/Title';
 import TaskCounter from '../atom/TaskCounter';
-import { usePathname } from 'next/navigation';
-
+import { context } from '@/context/context';
 const TitleSection = () => {
-    const path = usePathname().split('/')[1]
+    const { state } = context()
+    const route = Object.keys(state.activeRoute).find(key => state.activeRoute[key] === true);
     return (
         <div className='flex pt-7 pl-4 items-center gap-4'>
-            <Title text={path === '' ? 'Tasks' : path} size={1} />
+            <Title text={route as string} size={1} />
             <TaskCounter task={3} />
         </div>
     );

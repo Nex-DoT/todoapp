@@ -13,15 +13,15 @@ import IconTextButton from '../atom/IconTextButton';
 import { FaSignOutAlt } from 'react-icons/fa';
 import MiniBtnTheme from '../ui/mini-btn-theme';
 import { context } from '@/context/context';
-
+import { signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 const Menu = ({ menuOpen, toggleMenu }:any) => {
+    const  router = useRouter()
     const { dispatch } = context();
     const signOutHandeler = async () => {
-        const res = await fetch('api/auth/signout');
-        const data = await res.json();
-        if (data.status === 'success') {
-            dispatch({ type: 'ADDEMAIL', payload: '' });
-        }
+        signOut()
+        dispatch({ type: 'ADDEMAIL', payload: '' });
+        router.push('/')
     };
 
     const menuWidth = menuOpen ? 'w-80' : 'w-14';

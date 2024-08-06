@@ -3,11 +3,17 @@ import Icon from './Icon';
 import Title from './Title';
 import { Button } from '@nextui-org/button';
 import { MenuItemType } from '@/types';
+import { context } from '@/context/context';
 import TaskCounter from './TaskCounter';
-const MenuItems = ({text , icon}:MenuItemType) => {
+const MenuItems = ({text , icon , route}:MenuItemType) => {
+    const {dispatch , state} = context();
+    const clickHandeler=() => {
+        dispatch({type:'ACTIVE' , payload:route})
+    };
     return (
         <Button 
-            variant={'light'}
+            onClick={clickHandeler}
+            variant={state.activeRoute[route] ? 'flat' : 'light'}
             className='w-full flex items-center justify-between'
             endContent={
                 <TaskCounter/>

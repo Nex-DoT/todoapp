@@ -15,6 +15,7 @@ export async function ConnectToDB() {
 }
 
 import { authSignUpType } from "@/types";
+import Task from "@/models/Task";
 export function regexTest(type: 'signup', data: authSignUpType): any;
 export function regexTest(type: 'login', data: { email: string; password: string; }): any;
 export function regexTest(type: string, data: any): any {
@@ -57,7 +58,7 @@ export async function hashPassword(password: string){
   const hashedPassword = bcrypt.hashSync(password , 13);
   return hashedPassword
 }
-export async function unHashPassword(password:string , hashedPassword:string) {
+export async function verifyPassword(password:string , hashedPassword:string) {
   const verify = bcrypt.compare(password , hashedPassword);
   return verify
 }
@@ -78,3 +79,6 @@ export function truncateText(text:string, maxLength:number) {
   }
   return text;
 }
+
+
+

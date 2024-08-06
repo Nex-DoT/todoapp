@@ -3,39 +3,45 @@ import { ReactNode } from "react";
 import { createContext } from "react";
 // 1. تغییر نام متغیر به initialState
 const initialState = {
-  email:'',
-  username:'',
+  activeRoute:{
+    task:false,
+    today:true,
+    important:false,
+    stickyNots:false},
   tasks:[],
   list:[],
   notes:[],
   editor:{}
 };
 
-// 2. اضافه کردن state و action به reducer
 const reducer = (state:any, action:any) => {
-  // عملیات reducer
   switch(action.type) {
-    case 'SETLIST': 
-          return {...state , list: action.payload}
-    case 'SETTASK':
-          return {...state , tasks : action.payload}
-    case 'SETNOTE':
-          return {...state , notes : action.payload}
-    case 'SETEDITOR': 
-          return {...state , editor: action.payload}
-    case 'SETUSERNAME': 
-          return {...state , username: action.payload}
-    case 'ADDLIST':
-        if(!state.list.find((item:any)=> item.name === action.payload.name)){
-            state.list.push(action.payload);
+    case 'ACTIVE':
+      return {
+        ...state,
+        activeRoute: {
+          task:false,
+          today:false,
+          important:false,
+          stickyNots:false,
+          [action.payload]:true
         }
-        return {...state , list:[...state.list]};
+      }
+    case 'SETDATA' : 
+          return {
+            ...state , 
+            list: action.payload.list,
+            tasks: action.payload.tasks,
+            notes: action.payload.note,
+          }
+    case 'SETEDITOR': 
+          return {...state , editor: action.payload};
+    case 'ADDLIST':
+        return {...state , list:[...state.list , action.payload]};
     case 'ADDTASK':
         return {...state , tasks:[...state.tasks , action.payload]};
     case 'ADDNOTE':
-          return{...state , notes:[...state.notes , action.payload]}
-    case 'ADDEMAIL':
-       return{...state , email: action.payload}
+          return{...state , notes:[...state.notes , action.payload]};
     case 'UPDATETASK':
        console.log('Updating Task:', action.payload);
        return {
@@ -63,7 +69,6 @@ const ContextProviderApp = ({ children }: { children: ReactNode }) => {
 export const context = ()=>{
     const result = useContext(TodoApp);
     const {state , dispatch} = result as any;
-    console.log(result);
     return { state, dispatch}
     
 }

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
 import { Input } from "@nextui-org/input";
 import { IoIosMail } from "react-icons/io";
@@ -6,10 +6,12 @@ import { PiPasswordFill } from "react-icons/pi";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { useRouter } from 'next/navigation';
 import Title from '../atom/Title';
-import { regexTest } from '@/lib/utils';
+import { signIn } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 const Login = ({ onclick }: { onclick: () => void }) => {
-    const router = useRouter()
+    const session = useSession()
+    const router = useRouter();
     const [eye, setEye] = useState(false);
     const [error, setError] = useState({
         email: '',
@@ -20,37 +22,20 @@ const Login = ({ onclick }: { onclick: () => void }) => {
         password: '',
     });
 
-    const formHandeler = async (e: any) => {
+    const formHandler = async (e: any) => {
         e.preventDefault();
-        setError(regexTest('login', data));
-        if (error.email === "" && error.password === "") {
-            try {
-                const res = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: { "Content-Type": "application/json" }
-                });
-
-                if (!res.ok) {
-                    throw new Error(`HTTP error! status: ${res.status}`);
-                }
-
-                const newdata = await res.json();
-                
-                if (newdata.status === 'success') {
-                    router.push('/')
-                } else {
-                    console.error('Login failed:', newdata);
-                }
-
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
+        await signIn('credentials', {
+            email: data.email,
+            password: data.password,
+            redirect:false
+        });
+        router.push('/dashboard')
+        console.log(session);
+        
     }
 
     return (
-        <form className='flex gap-3 flex-col w-full h-full items-center justify-between' onSubmit={formHandeler}>
+        <form className='flex gap-3 flex-col w-full h-full items-center justify-between' onSubmit={formHandler}>
             <Title text='Fill this form and Login :)' size={1} />
             <Input
                 type="email"

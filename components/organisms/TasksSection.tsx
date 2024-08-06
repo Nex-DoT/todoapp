@@ -17,9 +17,7 @@ const TasksSection = () => {
         tasks: [],
         completedTask: [],
     });
-
-    const path = usePathname() as string;
-    
+    const route = Object.keys(state.activeRoute).find(key => state.activeRoute[key] === true);
     useEffect(() => {
         if (state.editor.task === '') {
             setOpen(false);
@@ -33,13 +31,13 @@ const TasksSection = () => {
             let tasks = [];
             let completedTask = [];
 
-            if (path === '/') {
+            if (route === 'task') {
                 tasks = state.tasks.filter((task: any) => !task.isDone);
                 completedTask = state.tasks.filter((task: any) => task.isDone);
-            } else if (path === '/important') {
+            } else if (route === 'important') {
                 tasks = state.tasks.filter((task: any) => !task.isDone && task.isImportant);
                 completedTask = state.tasks.filter((task: any) => task.isDone && task.isImportant);
-            } else if (path === '/today') {
+            } else if (route === 'today') {
                 tasks = state.tasks.filter((task: any) => !task.isDone && task.date === Today);
                 completedTask = state.tasks.filter((task: any) => task.isDone && task.date === Today);
             }
@@ -50,7 +48,7 @@ const TasksSection = () => {
         };
 
         filterTasks();
-    }, [state.tasks, path]);
+    }, [state.tasks, route]);
 
     return (
         <div className='h-full w-full flex relative'>
