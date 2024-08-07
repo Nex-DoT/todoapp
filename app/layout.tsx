@@ -1,14 +1,15 @@
 import "@/styles/globals.css";
 import { Providers } from "./providers";
 import CustomSessionProvider from "./sessionProvider";
-import { Session } from "next-auth"; // Ensure this import is correct
+// import { Session } from "next-auth"; // Import the correct type for session
+// import { LayoutProps } from "framer-motion";
+// import { ReactNode } from "react";
+// interface RootLayoutProps extends LayoutProps {
+//   children: ReactNode
+//   session?: Session; // Make session optional
+// }
 
-interface RootLayoutProps {
-  children: React.ReactNode;
-  session?: Session; // Make session optional
-}
-
-export default function RootLayout({ children, session }: RootLayoutProps) {
+export default function RootLayout({ children, session }: any) {
   return (
     <html lang="en" suppressHydrationWarning className="h-screen">
       <head />
