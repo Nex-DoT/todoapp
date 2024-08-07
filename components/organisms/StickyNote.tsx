@@ -70,7 +70,7 @@ const StickyNots = () => {
                         <Input type='text'name='description' value={listData.description} onChange={inputHandeler} label='Description' size='sm'/>
                         <Title text='pick a color:' size={1} />
                         <div className='flex items-center justify-around'>
-                            {colors.map((item:string)=> <button  onClick={()=>colorSethandeler(`${item}`)} style={{ backgroundColor: `#${item}` }} className={` w-8 h-8 hover:opacity-90 transition-all bg-[#${item}] opacity-40 rounded-md ${listData.color === item && 'border-opa scale-110 transition-all !opacity-100'} `}></button> )}
+                            {colors.map((item:string)=> <button key={item} onClick={()=>colorSethandeler(`${item}`)} style={{ backgroundColor: `#${item}` }} className={` w-8 h-8 hover:opacity-90 transition-all bg-[#${item}] opacity-40 rounded-md ${listData.color === item && 'border-opa scale-110 transition-all !opacity-100'} `}></button> )}
                         </div>
                     </ModalBody>
                     <ModalFooter>
