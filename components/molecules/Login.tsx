@@ -40,6 +40,7 @@ const Login = ({ onclick }: { onclick: () => void }) => {
             <Input
                 type="email"
                 isInvalid={error.email !== ""}
+                value={data.email}
                 errorMessage={error.email}
                 onChange={(e) => setData({ ...data, email: e.target.value })}
                 placeholder="your Email@example.com"
@@ -51,6 +52,7 @@ const Login = ({ onclick }: { onclick: () => void }) => {
                 type={eye ? 'text' : 'password'}
                 isInvalid={error.password !== ""}
                 errorMessage={error.password}
+                value={data.password}
                 onChange={(e) => setData({ ...data, password: e.target.value })}
                 placeholder="your password"
                 startContent={
