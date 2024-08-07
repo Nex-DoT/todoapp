@@ -2,20 +2,22 @@
 
 import { useSession } from 'next-auth/react';
 import { useTransition, useEffect, useState } from 'react';
-import Dashboard from '@/components/pages/Tasks';
+import Dashboard from '@/components/pages/Dashboard';
 import { dataFetch } from '@/lib/serverActions';
 import {Spinner} from "@nextui-org/spinner";
+import { useRouter } from 'next/navigation';
 import { context } from '@/context/context';
 const Page = () => {
   const {state , dispatch} = context();
   const { data: session, status }= useSession();
   const email = session?.user?.email;
   console.log(session);
-  
+  const router = useRouter()
   const [isPending, startTransition] = useTransition();
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    if(status === 'unauthenticated') router.push('/')
     if (email) {
       startTransition(() => {
         dataFetch(email).then((fetchedData) => {

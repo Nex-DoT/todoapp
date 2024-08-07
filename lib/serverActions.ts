@@ -72,6 +72,26 @@ export async function createTask(data:any){
         const newTask = createdTask ? JSON.parse(JSON.stringify(createdTask)):[];
         return newTask;
     }catch(e){
-        console.log('error in creasting the task')
+        console.log('error in creasting the list');
     }
+}
+
+export async function createNote(data:any , email:string){
+    try{
+        await ConnectToDB();
+    }catch(e){
+        console.error('Error in ConnectToDB', e);
+        throw new Error('Error in ConnectToDB');
+    }
+    if (!data) return;
+    if (!email) return;
+    try{
+        const createdNote = await Note.create({...data , email})
+        const newNote = JSON.parse(JSON.stringify(createdNote));
+        return newNote
+    }catch(e){
+        console.log('error in creasting the note');
+    }
+
+
 }

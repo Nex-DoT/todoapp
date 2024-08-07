@@ -4,8 +4,8 @@ import { createContext } from "react";
 // 1. تغییر نام متغیر به initialState
 const initialState = {
   activeRoute:{
-    task:false,
-    today:true,
+    task:true,
+    today:false,
     important:false,
     stickyNots:false},
   tasks:[],
