@@ -1,11 +1,11 @@
 import "@/styles/globals.css";
 import { Providers } from "./providers";
 import CustomSessionProvider from "./sessionProvider";
-import { Session } from "next-auth"; // Import the correct type for session
+import { Session } from "next-auth"; // Ensure this import is correct
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  session: Session; // Use a specific type instead of 'any'
+  session?: Session; // Make session optional
 }
 
 export default function RootLayout({ children, session }: RootLayoutProps) {
