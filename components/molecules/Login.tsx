@@ -18,8 +18,8 @@ const Login = ({ onclick }: { onclick: () => void }) => {
         password: ''
     });
     const [data, setData] = useState({
-        email: '',
-        password: '',
+        email: 'karfarmaTest@gmail.com',
+        password: '123456Ab',
     });
 
     const formHandler = async (e: any) => {

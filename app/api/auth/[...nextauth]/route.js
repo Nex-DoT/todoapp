@@ -6,6 +6,7 @@ import { verifyPassword } from "@/lib/utils";
 
 const authOptions = {
     session: {strategy: 'jwt'},
+    secret: process.env.SECRET,
     providers:[
         CredentialsProvider({
             async authorize( credentials ){
