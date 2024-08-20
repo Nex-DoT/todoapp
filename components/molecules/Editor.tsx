@@ -6,6 +6,7 @@ import IconButton from '../atom/IconButton';
 import { Input, Textarea } from '@nextui-org/input';
 import IconTextButton from '../atom/IconTextButton';
 import { FaCalendarDays } from 'react-icons/fa6';
+import { deleteTask } from '@/lib/serverActions';
 import { parseDate } from "@internationalized/date";
 import { Calendar } from "@nextui-org/calendar";
 import { LuPlus } from "react-icons/lu";
@@ -57,7 +58,21 @@ const Editor = ({open}: any) => {
             return undefined;
         }
     };
-
+    const deleteHandler = async () => {
+        try {
+            const res = await deleteTask(data); // Call your server action
+            if (res.status === 'ok') {
+                dispatch({ type: 'DELETETASK', payload: data._id });
+                toastify('success', res.message); // Show success toast
+            } else {
+                toastify('failed', res.message); // Show error toast
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            toastify('failed', 'An error occurred while deleting the task.');
+        }
+    };
+    
     const saveHandler = async () => {
         if(!data.list) {
             toastify('failed' , 'select your List pls');
@@ -174,7 +189,7 @@ const Editor = ({open}: any) => {
                     />
                 </div>
                 <div className='gap-2 flex'>
-                    <Button className='w-1/2' variant='bordered'>Delete Task</Button>
+                    <Button className='w-1/2' variant='bordered' color='danger'  onClick={deleteHandler}>Delete Task</Button>
                     <Button className='w-1/2' variant='solid' color='primary' onClick={saveHandler}>Save Changes</Button>
                 </div>
             </div>

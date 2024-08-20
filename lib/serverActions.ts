@@ -92,6 +92,32 @@ export async function createNote(data:any , email:string){
     }catch(e){
         console.log('error in creasting the note');
     }
-
-
 }
+import { ObjectId } from 'mongodb'; // اضافه کردن این ایمپورت
+
+export async function deleteTask(data: any) {
+    try {
+        await ConnectToDB();
+    } catch (err) {
+        console.error('Error in ConnectToDB', err);
+        return { status: 'failed', message: 'Database connection failed.' };
+    }
+
+    if (!data || !data._id) {
+        return { status: 'failed', message: 'No valid task ID provided.' };
+    }
+
+    try {
+        const taskId = new ObjectId(data._id); // تبدیل ID به ObjectId
+
+        const deleted = await Task.deleteOne({ _id: taskId }); // استفاده از ObjectId برای حذف
+
+        if (deleted.deletedCount === 0) {
+            return { status: 'failed', message: 'Task deletion failed or task not found.' };
+        }
+        return { status: 'ok', message: 'Task deleted successfully.' };
+    } catch (e) {
+        return { status: 'failed', message: 'Task deletion failed due to an error.' };
+    }
+}
+

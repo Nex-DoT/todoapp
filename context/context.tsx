@@ -27,6 +27,11 @@ const reducer = (state:any, action:any) => {
           [action.payload]:true
         }
       }
+    case 'DELETETASK':
+       return {
+           ...state,
+           tasks: state.tasks.filter((task: any) => task._id !== action.payload),
+       };
     case 'SETDATA' : 
           return {
             ...state , 
