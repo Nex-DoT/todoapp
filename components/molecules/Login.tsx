@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import Title from '../atom/Title';
 import { signIn } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
-
+import { toastify } from '@/lib/utils';
 const Login = ({ onclick }: { onclick: () => void }) => {
     const session = useSession()
     const router = useRouter();
@@ -23,15 +23,20 @@ const Login = ({ onclick }: { onclick: () => void }) => {
     });
 
     const formHandler = async (e: any) => {
-        e.preventDefault();
-        await signIn('credentials', {
-            email: data.email,
-            password: data.password,
-            redirect:false
-        });
-        router.push('/dashboard')
-        console.log(session);
-        
+         e.preventDefault();
+
+         const result = await signIn('credentials', {
+             email: data.email,
+             password: data.password,
+             redirect: false,
+         });
+
+         if (result?.error) {
+             toastify('error', result.error);
+         } else if (result?.ok) {
+             toastify('success', 'Logged in successfully!');
+             router.push('/dashboard');
+         }
     }
 
     return (

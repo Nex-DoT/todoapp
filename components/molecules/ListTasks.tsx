@@ -13,6 +13,7 @@ import { FaPlus } from "react-icons/fa";
 import { Input } from '@nextui-org/input';
 import {  Modal,   ModalContent, useDisclosure ,   ModalHeader,   ModalBody,   ModalFooter} from "@nextui-org/modal";
 import { context } from '@/context/context';
+import { toastify } from '@/lib/utils';
 const colors = ['FF5733', '33FF57', '3357FF', 'FF33A1', '33FFA1', 'A133FF', 'FFA133'];
 
 const ListTasks =  () => {
@@ -32,13 +33,13 @@ const ListTasks =  () => {
     const inputHandeler = (e:any)=>{
         setListData({...listData , name: e.target.value});
     }
-    const addHandeler = () =>{}
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const ceatingListHandeler = async ()=>{
         if (email) {
             startTransition(() => {
               createList(email , listData).then((fetchedData) => {
                 console.log(fetchedData);
+                toastify('success' , `'${listData.name}' has been created`)
                 dispatch( { type: 'ADDLIST' , payload: fetchedData})
               }).catch((error) => {
                 console.error("Failed to fetch data", error);

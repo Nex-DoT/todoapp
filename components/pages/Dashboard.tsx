@@ -3,6 +3,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import Menu from '../organisms/Menu';
 import TasksSection from '../organisms/TasksSection';
 import { context } from '@/context/context';
+// const ToastContainer = require('react-toastify')
+import { ToastContainer, toast } from 'react-toastify';
 import StickyNots from '../organisms/StickyNote';
 const Dashboard = () => {
   const {state} = context()
@@ -12,7 +14,6 @@ const Dashboard = () => {
   const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
-
     return (
         <div className='w-full h-full flex'>
             <Menu menuOpen={menuOpen} toggleMenu={toggleMenu}/>

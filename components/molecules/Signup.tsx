@@ -9,7 +9,7 @@ import { PiPasswordFill } from "react-icons/pi";
 import { VscEye } from "react-icons/vsc";
 import { VscEyeClosed } from "react-icons/vsc";
 import Title from '../atom/Title';
-import { regexTest } from '@/lib/utils';
+import { regexTest, toastify } from '@/lib/utils';
 import { authSignUpType } from '@/types';
 const Signup = ({onclick}:{onclick:()=>void}) => {
     const [eye , setEye] = useState(false);
@@ -45,9 +45,11 @@ const Signup = ({onclick}:{onclick:()=>void}) => {
     
                 try {
                     newdata = JSON.parse(text);
-                    if(newdata.status === 'success') onclick()
-                } catch (e) {
+                    if(newdata.status === 'success') onclick(); toastify('success' , 'user created successfully')
+
+                } catch (e:any) {
                     console.error('Error parsing JSON response:', e);
+                    toastify('failed' , `${e.message}`)
                     return;
                 }
     

@@ -13,10 +13,11 @@ import { context } from '@/context/context';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/dropdown';
 import { Button } from '@nextui-org/button';
 import { BsChevronDown } from "react-icons/bs";
+import { toastify } from '@/lib/utils';
 
 const Editor = ({open}: any) => {
     const { state, dispatch } = context();
-    const [data, setData] = useState(state.editor);
+    const [data, setData] = useState({...state.editor});
     const [selectedKeys, setSelectedKeys] = useState(new Set([""]));
     const selectedValue = useMemo(
         () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
@@ -58,6 +59,10 @@ const Editor = ({open}: any) => {
     };
 
     const saveHandler = async () => {
+        if(!data.list) {
+            toastify('failed' , 'select your List pls');
+            return;
+        }
         try {
             const res = await fetch('api/event/task', {
                 method: 'PATCH',
@@ -66,6 +71,7 @@ const Editor = ({open}: any) => {
             });
 
             if (!res.ok) {
+                toastify('success' , 'your task has been updated.')
                 console.error('Error:', res.statusText);
                 return;
             }

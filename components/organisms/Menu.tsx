@@ -15,10 +15,12 @@ import MiniBtnTheme from '../ui/mini-btn-theme';
 import { context } from '@/context/context';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { toastify } from '@/lib/utils';
 const Menu = ({ menuOpen, toggleMenu }:any) => {
     const  router = useRouter()
     const { dispatch } = context();
     const signOutHandeler = async () => {
+        toastify('success' , 'you have signed out successfully.')
         signOut()
         dispatch({ type: 'ADDEMAIL', payload: '' });
         router.push('/')

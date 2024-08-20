@@ -80,5 +80,31 @@ export function truncateText(text:string, maxLength:number) {
   return text;
 }
 
+import { toast } from 'react-toastify';
 
+export function toastify( status:string , message:string){
+  if(status === 'success'){
+    toast.success(`${message}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
+  }else{
+    toast.error(`${message}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
+  }
+}
 

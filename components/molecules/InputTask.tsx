@@ -17,6 +17,7 @@ import IconButton from '../atom/IconButton';
 import { AiOutlineMore } from "react-icons/ai";
 import { useTransition } from 'react';
 import IconTextButton from '../atom/IconTextButton';
+import { toastify } from '@/lib/utils';
 const InputTask = () => {
   const [isPending , startTransition ] = useTransition();
   const session = useSession();
@@ -70,14 +71,17 @@ const InputTask = () => {
     };
     const plusHandeler = async () => {
       if(data.list === ''){
+        toastify('failed' , 'select your list first');
         return;
       }
       if (email) {
         startTransition(() => {
           createTask(data).then((fetchedData) => {
+            toastify('success' , 'your task has been created')
             console.log(fetchedData);
             dispatch({type:'ADDTASK' , payload:fetchedData});
           }).catch((error) => {
+            toastify('failed', `${error}` )
             console.error("Failed to fetch data", error);
           });
         });
