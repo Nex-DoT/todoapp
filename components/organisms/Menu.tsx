@@ -16,7 +16,8 @@ import { context } from '@/context/context';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toastify } from '@/lib/utils';
-const Menu = ({ menuOpen, toggleMenu }:any) => {
+import { menuType } from '@/types';
+const Menu = ({ menuOpen, toggleMenu }:menuType) => {
     const  router = useRouter()
     const { dispatch } = context();
     const signOutHandeler = async () => {

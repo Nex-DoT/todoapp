@@ -5,6 +5,7 @@ import List from "@/models/List";
 import Note from "@/models/Note";
 import { ConnectToDB } from "./utils";
 
+
 // Task Fetch
 export async function dataFetch(email: string) {
     try {
@@ -34,10 +35,7 @@ export async function dataFetch(email: string) {
         throw new Error('Error fetching data');
     }
 }
-interface listType{
-    color: string,
-    name: string
-}
+import { listType } from "@/types";
 
 export async function createList(email: string , data:listType){
     try {
@@ -59,7 +57,8 @@ export async function createList(email: string , data:listType){
     }
 }
 
-export async function createTask(data:any){
+import { taskType } from "@/types";
+export async function createTask(data:taskType){
     try {
         await ConnectToDB();
     } catch (err) {
@@ -76,7 +75,8 @@ export async function createTask(data:any){
     }
 }
 
-export async function createNote(data:any , email:string){
+import { noteType } from "@/types";
+export async function createNote(data:noteType , email:string){
     try{
         await ConnectToDB();
     }catch(e){
@@ -93,9 +93,11 @@ export async function createNote(data:any , email:string){
         console.log('error in creasting the note');
     }
 }
+
+
 import { ObjectId } from 'mongodb'; // اضافه کردن این ایمپورت
 
-export async function deleteTask(data: any) {
+export async function deleteTask(data: taskType) {
     try {
         await ConnectToDB();
     } catch (err) {
@@ -120,4 +122,3 @@ export async function deleteTask(data: any) {
         return { status: 'failed', message: 'Task deletion failed due to an error.' };
     }
 }
-

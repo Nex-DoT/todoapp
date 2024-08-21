@@ -6,6 +6,7 @@ import InputTask from '../molecules/InputTask';
 import TitleSection from '../molecules/TitleSection';
 import TaskSection from '../molecules/TaskSection';
 import { useRouter , usePathname } from 'next/navigation';
+import { taskType } from '@/types';
 const date = new Date();
 const Today = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
@@ -32,14 +33,14 @@ const TasksSection = () => {
             let completedTask = [];
 
             if (route === 'task') {
-                tasks = state.tasks.filter((task: any) => !task.isDone);
-                completedTask = state.tasks.filter((task: any) => task.isDone);
+                tasks = state.tasks.filter((task: taskType) => !task.isDone);
+                completedTask = state.tasks.filter((task: taskType) => task.isDone);
             } else if (route === 'important') {
-                tasks = state.tasks.filter((task: any) => !task.isDone && task.isImportant);
-                completedTask = state.tasks.filter((task: any) => task.isDone && task.isImportant);
+                tasks = state.tasks.filter((task: taskType) => !task.isDone && task.isImportant);
+                completedTask = state.tasks.filter((task: taskType) => task.isDone && task.isImportant);
             } else if (route === 'today') {
-                tasks = state.tasks.filter((task: any) => !task.isDone && task.date === Today);
-                completedTask = state.tasks.filter((task: any) => task.isDone && task.date === Today);
+                tasks = state.tasks.filter((task: taskType) => !task.isDone && task.date === Today);
+                completedTask = state.tasks.filter((task: taskType) => task.isDone && task.date === Today);
             }
             
             setTask({ tasks, completedTask });
