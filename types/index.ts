@@ -33,7 +33,7 @@ export type taskType= {
   task: string,
   list: string,
   date: string,
-  email?: string,
+  email: string | undefined,
   isDone: boolean,
   isImportant: boolean,
   time:string,

@@ -17,6 +17,7 @@ import IconButton from '../atom/IconButton';
 import { AiOutlineMore } from "react-icons/ai";
 import { useTransition } from 'react';
 import IconTextButton from '../atom/IconTextButton';
+import { taskType } from '@/types';
 import { toastify } from '@/lib/utils';
 const InputTask = () => {
   const [isPending , startTransition ] = useTransition();
@@ -34,8 +35,10 @@ const InputTask = () => {
     [selectedKeys]
   );
   let [data , setData ] = React.useState({
-    email: email,
+    email: email ?? undefined,
     task: 'new Task',
+    subtask:{},
+    isDone:false,
     isImportant: false,
     date:`${date}`,
     time: '',
@@ -76,7 +79,7 @@ const InputTask = () => {
       }
       if (email) {
         startTransition(() => {
-          createTask(data).then((fetchedData) => {
+          createTask(data ).then((fetchedData) => {
             toastify('success' , 'your task has been created')
             console.log(fetchedData);
             dispatch({type:'ADDTASK' , payload:fetchedData});
