@@ -11,6 +11,9 @@ module.exports = {
 ],
   theme: {
     extend: {
+      height:{
+          'svh' : '100svh'
+      },
       keyframes: {
         skew:{
           '90': '45deg'
